@@ -1,0 +1,16 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts.css);
+
+@import url(../blocks/body/body.css);
+
+/* header */
+
+@import url(../blocks/header/header.css);
+
+/* main */
+
+@import url(../blocks/main/main.css);
+
+/* footer */
+
+@import url(../blocks/footer/footer.css);
