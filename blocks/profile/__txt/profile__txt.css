@@ -1,0 +1,23 @@
+.profile__txt {
+  /* Может лишнее свойство, так как выравнивать
+  по вертикальной оси обертки ее детей не нужно
+  Достаточно выравнять саму обертку,
+  а детям дать фиксированные падинги */
+  /* display: flex; */
+
+  /* Временно лишнее свойстро про строки */
+  /* flex-direction: column; */
+
+  /* margin */
+  margin-top: auto;
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: auto;
+
+  /* padding */
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 30px;
+  padding-bottom: 0;
+  background-color: rgb(85, 166, 166);
+}

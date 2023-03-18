@@ -1,0 +1,6 @@
+.profile__name-wrap {
+  /* обертка имени и кнопки редактирования */
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}

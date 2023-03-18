@@ -9,16 +9,52 @@
     <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="body">
-    <!-- header -->
+    <div class="page">
+      <!-- header -->
 
-    <header class="header"></header>
+      <header class="header page__header">
+        <img
+          class="header__logo"
+          src="./images/logo.svg"
+          alt="логотип проекта Место Россия"
+        />
+      </header>
 
-    <!-- main -->
+      <!-- main -->
 
-    <main class="main"></main>
+      <main class="main">
+        <!-- profile -->
 
-    <!-- footer -->
+        <section class="profile">
+          <div class="profile__account">
+            <img
+              class="profile__avatar"
+              src="/images/avatar.png"
+              alt="фото профиля"
+            />
+            <!-- текстовая часть профиля -->
+            <div class="profile__txt">
+              <!-- обертка имени и кнопки -->
+              <div class="profile__name-wrap">
+                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <img
+                  class="profile__edit-btn"
+                  src="./images/edit_btn.svg"
+                  alt="кнопка редактирования профиля пользователя"
+                />
+              </div>
+              <p class="profile__user-about">Исследователь океана</p>
+            </div>
+          </div>
 
-    <footer></footer>
+          <!-- button add photo -->
+          <div class="profile__add-btn"></div>
+        </section>
+      </main>
+
+      <!-- footer -->
+
+      <footer></footer>
+    </div>
   </body>
 </html>

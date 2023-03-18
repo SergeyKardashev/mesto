@@ -1,0 +1,13 @@
+.profile__user-about {
+  margin: 0;
+  padding: 0;
+
+  /* fallback fonts */
+  font-family: Inter;
+
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.22;
+  color: white;
+  background-color: blueviolet;
+}
