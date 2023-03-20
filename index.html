@@ -13,6 +13,7 @@
       <!-- header -->
 
       <header class="header page__header">
+        <!-- Может быть сделать ссылкой  -->
         <img
           class="header__logo"
           src="./images/logo.svg"
@@ -41,6 +42,7 @@
                   class="profile__edit-btn"
                   src="./images/edit_btn.svg"
                   alt="кнопка редактирования профиля пользователя"
+                  role="button"
                 />
               </div>
               <p class="profile__user-about">Исследователь океана</p>
@@ -48,7 +50,7 @@
           </div>
 
           <!-- button add photo -->
-          <div class="profile__add-btn"></div>
+          <div class="profile__add-btn" role="button"></div>
         </section>
 
         <!-- gallery -->
@@ -62,7 +64,7 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Карачаевск</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
 
@@ -74,7 +76,7 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Гора Эльбрус</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
 
@@ -86,7 +88,7 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Домбай</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
 
@@ -98,7 +100,7 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Айсберг</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
 
@@ -110,21 +112,9 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Каньон</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
-
-          <!-- <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/canion.png"
-              alt="фото каньона"
-            />
-            <div class="gallery__caption-wrap">
-              <p class="gallery__text">Каньон</p>
-              <div class="gallery__like"></div>
-            </div>
-          </div> -->
 
           <div class="gallery__element">
             <img
@@ -134,7 +124,7 @@
             />
             <div class="gallery__caption-wrap">
               <p class="gallery__text">Архыз</p>
-              <div class="gallery__like"></div>
+              <div class="gallery__like" role="button"></div>
             </div>
           </div>
         </section>
@@ -142,7 +132,37 @@
 
       <!-- footer -->
 
-      <footer class="footer">© 2020 Mesto Russia</footer>
+      <footer class="footer">&copy; 2020 Mesto Russia</footer>
     </div>
+
+    <!-- popup -->
+
+    <section class="popup">
+      <div class="popup__content">
+        <!-- не нужно ли заменить див кнопки закрытия на картинку? Это же не декорация -->
+        <div class="popup__close-button" role="button"></div>
+        <h2 class="popup__heading">
+          Редактировать профиль (скрыть по умолчанию)
+        </h2>
+        <form action="" class="popup__form popup__form_type_profile">
+          <input
+            class="popup__input"
+            type="text"
+            value="Жак-Ив Кусто"
+            placeholder="Name"
+          />
+          <input
+            class="popup__input"
+            type="text"
+            value="Исследователь океана"
+            placeholder="Job"
+          />
+
+          <!-- может вместо кнопки див - проще стилизовать -->
+          <!-- добавить свойство отключения дефолтного поведения -->
+          <button class="popup__submit-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
   </body>
 </html>
