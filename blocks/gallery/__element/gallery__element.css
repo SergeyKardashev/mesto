@@ -1,0 +1,9 @@
+.gallery__element {
+  /* maybe the sizes are not needed */
+  width: 282px;
+  height: 361px;
+  border-radius: 10px;
+  background-color: lime;
+  overflow: hidden;
+  font-size: 0;
+}

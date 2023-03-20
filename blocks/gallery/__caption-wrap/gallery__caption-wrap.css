@@ -1,0 +1,12 @@
+.gallery__caption-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background-color: white;
+  /* maybe the sizes of gallery__element
+  must be here */
+  padding-top: 25px;
+  padding-right: 15px;
+  padding-bottom: 25px;
+  padding-left: 21px;
+}

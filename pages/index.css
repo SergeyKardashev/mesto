@@ -14,6 +14,7 @@
 
 /* main */
 
+/* возможно лишний класс */
 @import url(../blocks/main/main.css);
 
 /* profile */
@@ -27,6 +28,16 @@
 @import url(../blocks/profile/__edit-btn/profile__edit-btn.css);
 @import url(../blocks/profile/__user-about/profile__user-about.css);
 @import url(../blocks/profile/__add-btn/profile__add-btn.css);
+
+/* gallery */
+
+@import url(../blocks/gallery/gallery.css);
+@import url(../blocks/gallery/__element/gallery__element.css);
+@import url(../blocks/gallery/__img/gallery__img.css);
+@import url(../blocks/gallery/__caption-wrap/gallery__caption-wrap.css);
+@import url(../blocks/gallery/__text/gallery__text.css);
+@import url(../blocks/gallery/__like/gallery__like.css);
+@import url(../blocks/gallery/__like/_status/gallery__like_status_active.css);
 
 /* footer */
 

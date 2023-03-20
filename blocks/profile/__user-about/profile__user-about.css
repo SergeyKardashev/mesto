@@ -1,6 +1,7 @@
 .profile__user-about {
   margin: 0;
   padding: 0;
+  padding-top: 7px;
   font-family: Inter;
   font-size: 18px;
   font-weight: 400;
