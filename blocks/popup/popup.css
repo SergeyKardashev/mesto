@@ -10,5 +10,5 @@
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
   /* by default is hidden. Remove this line */
-  visibility: visible;
+  visibility: hidden;
 }
