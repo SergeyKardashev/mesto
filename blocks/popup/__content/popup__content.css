@@ -1,7 +1,6 @@
 .popup__content {
   margin: auto;
   position: fixed;
-  margin: auto;
   display: flex;
   flex-direction: column;
   width: 100%;
