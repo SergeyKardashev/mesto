@@ -8,6 +8,7 @@
   background-size: 22px 22px;
   border: 2px solid white;
   border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .profile__add-btn:hover {
@@ -15,7 +16,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 917px) {
   .profile__add-btn {
     margin-top: 33px;
     width: 100%;

@@ -2,9 +2,16 @@
   display: flex;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 917px) {
   .profile__account {
+    width: 100%;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .profile__account {
   }
 }

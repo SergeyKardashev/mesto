@@ -9,8 +9,13 @@
   padding-bottom: 0;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 917px) {
   .profile__txt {
     padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 617px) {
+  .profile__txt {
   }
 }

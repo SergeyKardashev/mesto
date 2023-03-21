@@ -4,6 +4,7 @@
   background-image: url(../../../images/like.svg);
   background-position: center center;
   background-repeat: no-repeat;
+  flex-shrink: 0;
 }
 
 .gallery__like:hover {

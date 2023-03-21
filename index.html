@@ -38,7 +38,9 @@
             <div class="profile__txt">
               <!-- обертка имени и кнопки -->
               <div class="profile__name-wrap">
-                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <h1 class="profile__name">
+                  Жак-Ив КустоКустоКустоКустоКустоКустоКустоКустоКустоКустоКусто
+                </h1>
                 <img
                   class="profile__edit-btn"
                   src="./images/edit_btn.svg"
@@ -46,7 +48,10 @@
                   role="button"
                 />
               </div>
-              <p class="profile__user-about">Исследователь океана</p>
+              <p class="profile__job">
+                Исследователь
+                океанаокеанаокеанаокеанаокеанаокеанаокеанаокеанаокеанаокеанаокеанаокеана
+              </p>
             </div>
           </div>
 
@@ -100,7 +105,7 @@
               alt="фото айсберга"
             />
             <div class="gallery__caption-wrap">
-              <p class="gallery__text">Айсберг</p>
+              <p class="gallery__text">Айсберг с гладкими формами</p>
               <div class="gallery__like" role="button"></div>
             </div>
           </div>
@@ -124,7 +129,7 @@
               alt="фото Архыза"
             />
             <div class="gallery__caption-wrap">
-              <p class="gallery__text">Архыз</p>
+              <p class="gallery__text">Архыз и овцы в горной местности</p>
               <div class="gallery__like" role="button"></div>
             </div>
           </div>
@@ -138,24 +143,20 @@
 
     <!-- popup -->
 
-    <section class="popup popup_profile-edit">
+    <section class="popup popup_profile">
       <div class="popup__content">
         <!-- не нужно ли заменить див кнопки закрытия на картинку? Это же не декорация -->
         <div class="popup__close-button" role="button"></div>
-        <h2 class="popup__heading">
-          Редактировать профиль (скрыть по умолчанию)
-        </h2>
+        <h2 class="popup__heading">Редактировать профиль</h2>
         <form action="" class="popup__form popup__form_type_profile">
           <input
             class="popup__input popup__input_user-name"
             type="text"
-            value="Жак-Ив Кусто"
             placeholder="Name"
           />
           <input
-            class="popup__input popup__input_user-about"
+            class="popup__input popup__input_user-job"
             type="text"
-            value="Исследователь океана"
             placeholder="Job"
           />
 
