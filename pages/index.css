@@ -9,8 +9,6 @@
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-/* может быть лишний класс page__header */
-@import url(../blocks/page/__header/page__header.css);
 
 /* main */
 
