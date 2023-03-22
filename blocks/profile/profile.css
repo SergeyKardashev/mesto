@@ -11,7 +11,6 @@
   .profile {
     max-width: calc(100% - 38px);
     flex-direction: column;
-    align-items: center;
     padding-right: 19px;
     padding-left: 19px;
   }
