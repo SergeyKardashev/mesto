@@ -4,7 +4,6 @@
   position: absolute;
   top: -40px;
   right: -40px;
-
   background-image: url(../../../images/close-icon.svg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -21,7 +20,6 @@
     width: 20px;
     height: 20px;
     background-size: 20px 20px;
-    top: -40px;
     right: 0px;
   }
 }
