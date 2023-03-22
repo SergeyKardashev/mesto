@@ -5,6 +5,8 @@
   background-position: center center;
   background-repeat: no-repeat;
   flex-shrink: 0;
+  border: none;
+  background-color: transparent;
 }
 
 .gallery__like:hover {

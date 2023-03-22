@@ -38,19 +38,14 @@
               <!-- обертка имени и кнопки -->
               <div class="profile__name-wrap">
                 <h1 class="profile__name">Жак-Ив Кусто</h1>
-                <div class="profile__edit-btn" role="button"></div>
-                <!-- <img
-                  class="profile__edit-btn"
-                  src="./images/edit_btn.svg"
-                  alt="кнопка редактирования профиля пользователя"
-                /> -->
+                <button class="profile__edit-btn" type="button"></button>
               </div>
               <p class="profile__job">Исследователь океана</p>
             </div>
           </div>
 
           <!-- button add photo -->
-          <div class="profile__add-btn" role="button"></div>
+          <button class="profile__add-btn" type="button"></button>
         </section>
 
         <!-- gallery -->
@@ -64,7 +59,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Карачаевск</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
 
@@ -76,7 +71,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Гора Эльбрус</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
 
@@ -88,7 +83,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Домбай</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
 
@@ -100,7 +95,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Айсберг с гладкими формами</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
 
@@ -112,7 +107,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Каньон</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
 
@@ -124,7 +119,7 @@
             />
             <div class="gallery__caption-wrap">
               <h2 class="gallery__text">Архыз и овцы в горной местности</h2>
-              <div class="gallery__like" role="button"></div>
+              <button class="gallery__like" type="button"></button>
             </div>
           </div>
         </section>
@@ -143,11 +138,7 @@
       <div class="popup__content">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form
-          class="popup__form popup__form_type_profile"
-          name="profile"
-          action=""
-        >
+        <form class="popup__form" name="profile">
           <input
             class="popup__input popup__input_type_user-name"
             name="userName"

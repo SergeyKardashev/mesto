@@ -10,6 +10,7 @@
   border: 1px solid white;
   flex-grow: 0;
   flex-shrink: 0;
+  background-color: transparent;
 }
 
 .profile__edit-btn:hover {

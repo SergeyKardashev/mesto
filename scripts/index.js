@@ -15,7 +15,7 @@ let userJobElement = document.querySelector(".profile__job");
 // console.log(userJobElement); // проверяю его ли я нашел
 
 // Находим форму в DOM +  проверяю ее ли я нашел. Нужна отдельно форма, а не весь попап, так как буду обращаться к нему для отправки формы.
-let formElement = popupProfile.querySelector(".popup__form_type_profile");
+let formElement = popupProfile.querySelector(".popup__form");
 // console.log(`Form: ${formElement}`);
 
 // ищу поле ввода ФИО + проверяю его ли я нашел
@@ -63,6 +63,7 @@ function handleFormSubmit(evt) {
 }
 
 // Клик по кнопке СОХРАНИТЬ
-// 1) добавляю обработчик к ФОРМЕ (не к кнопке):
-// 1) он будет следить за событием “submit”, а НЕ "клик"
-popupProfile.addEventListener("submit", handleFormSubmit);
+// 1) Добавляю обработчик к ФОРМЕ (не к кнопке):
+// 2) Он следит за событием “submit”, а НЕ "клик"
+// 3) Он запустит функцию с букетом инструкций, а не одно действие.
+formElement.addEventListener("submit", handleFormSubmit);

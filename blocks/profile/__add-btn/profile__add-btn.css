@@ -12,6 +12,7 @@
   box-sizing: border-box;
   position: relative;
   bottom: 4px;
+  background-color: transparent;
 }
 
 .profile__add-btn:hover {
