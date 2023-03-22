@@ -3,7 +3,7 @@ const btnProfile = document.querySelector(".profile__edit-btn");
 // console.log(`Profile button element: ${btnProfile}`);
 
 // весь попап профиля
-const popupProfile = document.querySelector(".popup_profile");
+const popupProfile = document.querySelector(".popup");
 // console.log(popupProfile);
 
 // ищу html элемент с ФИО в тексте профиля (объект или узел дом-дерева)
