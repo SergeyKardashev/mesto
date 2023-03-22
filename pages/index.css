@@ -35,7 +35,7 @@
 @import url(../blocks/gallery/__caption-wrap/gallery__caption-wrap.css);
 @import url(../blocks/gallery/__text/gallery__text.css);
 @import url(../blocks/gallery/__like/gallery__like.css);
-@import url(../blocks/gallery/__like/_status/gallery__like_status_active.css);
+@import url(../blocks/gallery/__like/_active/gallery__like_active.css);
 
 /* footer */
 
