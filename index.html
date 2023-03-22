@@ -139,24 +139,30 @@
 
     <!-- popup -->
 
-    <section class="popup">
+    <div class="popup">
       <div class="popup__content">
         <button class="popup__close-button" type="button"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form action="" class="popup__form popup__form_type_profile">
+        <form
+          class="popup__form popup__form_type_profile"
+          name="profile"
+          action=""
+        >
           <input
-            class="popup__input popup__input_user-name"
+            class="popup__input popup__input_type_user-name"
+            name="userName"
             type="text"
-            placeholder="Name"
+            placeholder="Имя"
           />
           <input
-            class="popup__input popup__input_user-job"
+            class="popup__input popup__input_type_user-job"
+            name="userJob"
             type="text"
-            placeholder="Job"
+            placeholder="Должность"
           />
           <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
       </div>
-    </section>
+    </div>
   </body>
 </html>

@@ -19,11 +19,11 @@ let formElement = popupProfile.querySelector(".popup__form_type_profile");
 // console.log(`Form: ${formElement}`);
 
 // ищу поле ввода ФИО + проверяю его ли я нашел
-let userNameInput = formElement.querySelector(".popup__input_user-name");
+let userNameInput = formElement.querySelector(".popup__input_type_user-name");
 // console.log(`FIO input: ${userNameInput}`);
 
 // ищу поле ввода работы + проверяю его ли я нашел
-let userJobInput = formElement.querySelector(".popup__input_user-job");
+let userJobInput = formElement.querySelector(".popup__input_type_user-job");
 // console.log(`Job Input: ${userJobInput}`);
 
 // крестик - кнопка закрытия попапа профиля
@@ -40,11 +40,16 @@ btnProfile.addEventListener("click", function () {
   popupProfile.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
 });
 
+// объявляю функцию, которая убирает класс, делающий попап видимым
+function closePopup() {
+  popupProfile.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
+}
+
 // клик по крестику - кнопке закрытия попапа профиля
 btnPopupProfileClose.addEventListener("click", function () {
   // проверка на отлов клика console.log("clicked closed");
-
-  popupProfile.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
+  // вызываю функцию сокрытия попапа
+  closePopup();
 });
 
 // Обработчик «отправки» формы (без вызова, просто функция)
@@ -53,7 +58,8 @@ function handleFormSubmit(evt) {
 
   userNameElement.textContent = userNameInput.value;
   userJobElement.textContent = userJobInput.value;
-  popupProfile.classList.remove("popup_opened");
+  // закладываю функцию сокрытия попапа
+  closePopup();
 }
 
 // Клик по кнопке СОХРАНИТЬ
