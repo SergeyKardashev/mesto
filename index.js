@@ -37,14 +37,14 @@ btnProfile.addEventListener("click", function () {
   userNameInput.value = userNameElement.textContent;
   userJobInput.value = userJobElement.textContent;
 
-  popupProfile.classList.add("popup_open"); // добавление класса ОТКРЫТО для попапа
+  popupProfile.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
 });
 
 // клик по крестику - кнопке закрытия попапа профиля
 btnPopupProfileClose.addEventListener("click", function () {
   // проверка на отлов клика console.log("clicked closed");
 
-  popupProfile.classList.remove("popup_open"); // убираю класс, делающий попап видимым
+  popupProfile.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
 });
 
 // Обработчик «отправки» формы (без вызова, просто функция)
@@ -53,7 +53,7 @@ function handleFormSubmit(evt) {
 
   userNameElement.textContent = userNameInput.value;
   userJobElement.textContent = userJobInput.value;
-  popupProfile.classList.remove("popup_open");
+  popupProfile.classList.remove("popup_opened");
 }
 
 // Клик по кнопке СОХРАНИТЬ
