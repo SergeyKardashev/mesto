@@ -8,12 +8,21 @@
   background-size: 22px 22px;
   border: 2px solid white;
   border-radius: 2px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: relative;
+  bottom: 4px;
+  background-color: transparent;
 }
 
-@media screen and (max-width: 767px) {
+.profile__add-btn:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 917px) {
   .profile__add-btn {
     margin-top: 33px;
-    width: 100%;
     max-width: 282px;
     background-size: 16px 16px;
   }

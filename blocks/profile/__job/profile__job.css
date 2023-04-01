@@ -1,11 +1,13 @@
-.profile__name {
+.profile__job {
   margin: 0;
   padding: 0;
   max-width: 470px;
+  padding-top: 7px;
+  padding-bottom: 5px;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
-  font-size: 42px;
-  font-weight: 500;
-  line-height: 1.14;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.22;
   color: white;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -13,14 +15,15 @@
 }
 
 @media screen and (max-width: 917px) {
-  .profile__name {
-    max-width: 550px;
-    font-size: 27px;
+  .profile__job {
+    max-width: 581px;
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 617px) {
-  .profile__name {
-    max-width: 254px;
+  .profile__job {
+    max-width: 282px;
+    font-size: 14px;
   }
 }

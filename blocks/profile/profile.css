@@ -1,8 +1,5 @@
 .profile {
   margin: 0 auto;
-
-  /* возможно лишнее свойство ширины
-  при наличии адаптива */
   width: 100%;
   max-width: 880px;
   display: flex;
@@ -10,9 +7,11 @@
   align-items: center;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 917px) {
   .profile {
+    max-width: calc(100% - 38px);
     flex-direction: column;
-    align-items: center;
+    padding-right: 19px;
+    padding-left: 19px;
   }
 }

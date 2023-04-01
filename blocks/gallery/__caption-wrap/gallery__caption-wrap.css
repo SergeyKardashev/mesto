@@ -1,0 +1,10 @@
+.gallery__caption-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background-color: white;
+  padding-top: 25px;
+  padding-right: 20px;
+  padding-bottom: 25px;
+  padding-left: 21px;
+}

@@ -9,11 +9,10 @@
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-/* может быть лишний класс page__header */
-@import url(../blocks/page/__header/page__header.css);
 
 /* main */
 
+/* возможно лишний класс */
 @import url(../blocks/main/main.css);
 
 /* profile */
@@ -25,9 +24,30 @@
 @import url(../blocks/profile/__name-wrap/profile__name-wrap.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__edit-btn/profile__edit-btn.css);
-@import url(../blocks/profile/__user-about/profile__user-about.css);
+@import url(../blocks/profile/__job/profile__job.css);
 @import url(../blocks/profile/__add-btn/profile__add-btn.css);
+
+/* gallery */
+
+@import url(../blocks/gallery/gallery.css);
+@import url(../blocks/gallery/__element/gallery__element.css);
+@import url(../blocks/gallery/__img/gallery__img.css);
+@import url(../blocks/gallery/__caption-wrap/gallery__caption-wrap.css);
+@import url(../blocks/gallery/__text/gallery__text.css);
+@import url(../blocks/gallery/__like/gallery__like.css);
+@import url(../blocks/gallery/__like/_active/gallery__like_active.css);
 
 /* footer */
 
 @import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);
+
+/* popup */
+
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/__heading/popup__heading.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__submit-button/popup__submit-button.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
