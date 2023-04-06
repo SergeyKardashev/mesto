@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
     <link rel="stylesheet" href="./pages/index.css" />
-    <script src="./scripts/index.js" defer></script>
   </head>
   <body class="body">
     <div class="page">
@@ -35,86 +34,13 @@
               <p class="profile__job">Исследователь океана</p>
             </div>
           </div>
-
           <!-- button add photo -->
-          <button class="profile__add-btn" type="button"></button>
+          <button class="profile__add-place-btn" type="button"></button>
         </section>
 
         <!-- gallery -->
 
-        <section class="gallery">
-          <!-- <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/karachaevsk.jpg"
-              alt="картина Карачаевска"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Карачаевск</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div>
-
-          <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/elbrus.png"
-              alt="фото горы Эльбрус"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Гора Эльбрус</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div>
-
-          <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/dombai.png"
-              alt="фото горы в Домбае"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Домбай</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div>
-
-          <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/iceberg.png"
-              alt="фото айсберга"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Айсберг с гладкими формами</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div>
-
-          <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/canion.png"
-              alt="фото айсберга"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Каньон</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div>
-
-          <div class="gallery__element">
-            <img
-              class="gallery__img"
-              src="./images/arhyz.png"
-              alt="фото Архыза"
-            />
-            <div class="gallery__caption-wrap">
-              <h2 class="gallery__text">Архыз и овцы в горной местности</h2>
-              <button class="gallery__like" type="button"></button>
-            </div>
-          </div> -->
-        </section>
+        <section class="gallery"></section>
       </main>
 
       <!-- footer -->
@@ -124,13 +50,27 @@
       </footer>
     </div>
 
-    <!-- popup -->
+    <!-- popup ADD PLACE CARD -->
 
-    <div class="popup">
+    <div class="popup popup_type_new-place">
       <div class="popup__container">
-        <button class="popup__close-button" type="button"></button>
+        <button class="popup__close-button popup__close-button_type_place" type="button"></button>
+        <h2 class="popup__heading">Новое место</h2>
+        <form class="popup__form popup__form_type_add-place" name="profile">
+          <input class="popup__input popup__input_type_place-name" name="placeName" type="text" placeholder="Название" />
+          <input class="popup__input popup__input_type_place-url" name="placeUrl" type="text" placeholder="Ссылка на картинку" />
+          <button class="popup__submit-button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- popup EDIT PROFILE -->
+
+    <div class="popup popup_type_user-profile">
+      <div class="popup__container">
+        <button class="popup__close-button popup__close-button_type_profile" type="button"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="popup__form" name="profile">
+        <form class="popup__form popup__form_type_user-profile" name="profile">
           <input class="popup__input popup__input_type_user-name" name="userName" type="text" placeholder="Имя" />
           <input class="popup__input popup__input_type_user-job" name="userJob" type="text" placeholder="Должность" />
           <button class="popup__submit-button" type="submit">Сохранить</button>
@@ -138,10 +78,21 @@
       </div>
     </div>
 
-    <!-- template  -->
+    <!-- popup ZOOM IMAGE -->
+
+    <div class="popup popup_type_zoom-image">
+      <div class="popup__container popup__container_type_zoom-image">
+        <button class="popup__close-button popup__close-button_type_zoom-image" type="button"></button>
+        <img class="popup__image-zoom" src="" alt="" />
+        <p class="popup__caption"></p>
+      </div>
+    </div>
+
+    <!-- template of place card in gallery -->
 
     <template id="card">
       <div class="gallery__element">
+        <button class="gallery__delete" type="button"></button>
         <img class="gallery__img" src="" alt="" />
         <div class="gallery__caption-wrap">
           <h2 class="gallery__text"></h2>
@@ -149,5 +100,6 @@
         </div>
       </div>
     </template>
+    <script src="./scripts/index.js" type="module"></script>
   </body>
 </html>
