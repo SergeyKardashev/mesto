@@ -1,4 +1,4 @@
-.profile__add-btn {
+.profile__add-place-btn {
   width: 100%;
   max-width: 150px;
   height: 50px;
@@ -15,13 +15,13 @@
   background-color: transparent;
 }
 
-.profile__add-btn:hover {
+.profile__add-place-btn:hover {
   opacity: 60%;
   cursor: pointer;
 }
 
 @media screen and (max-width: 917px) {
-  .profile__add-btn {
+  .profile__add-place-btn {
     margin-top: 33px;
     max-width: 282px;
     background-size: 16px 16px;

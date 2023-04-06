@@ -1,128 +1,19 @@
-// кнопка редактирования профиля и проверка переменной через консоль
-const btnProfile = document.querySelector(".profile__edit-btn");
-// console.log(`Profile button element: ${btnProfile}`);
-
-// весь попап профиля
-const popupProfile = document.querySelector(".popup");
-// console.log(popupProfile);
-
-// ищу html элемент с ФИО в тексте профиля (объект или узел дом-дерева)
-let userNameElement = document.querySelector(".profile__name");
-// проверяю его ли я нашел console.log(userNameTag);
-
-// ищу html-элемент с должностью в тексте профиля (объект или узел дом-дерева)
-let userJobElement = document.querySelector(".profile__job");
-// console.log(userJobElement); // проверяю его ли я нашел
-
-// Находим форму в DOM +  проверяю ее ли я нашел. Нужна отдельно форма, а не весь попап,
-// так как буду обращаться к нему для отправки формы.
-let formElement = popupProfile.querySelector(".popup__form");
-// console.log(`Form: ${formElement}`);
-
-// ищу поле ввода ФИО + проверяю его ли я нашел
-let userNameInput = formElement.querySelector(".popup__input_type_user-name");
-// console.log(`FIO input: ${userNameInput}`);
-
-// ищу поле ввода работы + проверяю его ли я нашел
-let userJobInput = formElement.querySelector(".popup__input_type_user-job");
-// console.log(`Job Input: ${userJobInput}`);
-
-// крестик - кнопка закрытия попапа профиля
-const btnPopupProfileClose = popupProfile.querySelector(".popup__close-button");
-
-// клик по кнопке редактирования профиля + проверка на отлов клика
-btnProfile.addEventListener("click", function () {
-  // console.log("clicked btnProfile");
-
-  // Заполняю поля формы значениями из объектов страницы
-  userNameInput.value = userNameElement.textContent;
-  userJobInput.value = userJobElement.textContent;
-
-  popupProfile.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
-});
-
-// объявляю функцию, которая убирает класс, делающий попап видимым
-function closePopup() {
-  popupProfile.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
-}
-
-// клик по крестику - кнопке закрытия попапа профиля
-btnPopupProfileClose.addEventListener("click", function () {
-  // проверка на отлов клика console.log("clicked closed");
-  // вызываю функцию сокрытия попапа
-  closePopup();
-});
-
-// Обработчик «отправки» формы (без вызова, просто функция)
-function handleFormSubmit(evt) {
-  evt.preventDefault();
-
-  userNameElement.textContent = userNameInput.value;
-  userJobElement.textContent = userJobInput.value;
-  // закладываю функцию сокрытия попапа
-  closePopup();
-}
-
-// Клик по кнопке СОХРАНИТЬ
-// 1) Добавляю обработчик к ФОРМЕ (не к кнопке):
-// 2) Он следит за событием “submit”, а НЕ "клик"
-// 3) Он запустит функцию с букетом инструкций, а не одно действие.
-formElement.addEventListener("submit", handleFormSubmit);
-//
-//
-//
-//
-// Наполнить галлерею карточками мест на основе шаблона и массива
-
-// массив для изначального наполнения галлереи
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-    alt: "Архыз",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-    alt: "Челябинская область",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-    alt: "Иваново",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-    alt: "Камчатка",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-    alt: "Холмогорский район",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    alt: "Байкал",
-  },
-];
-
-// скрипт по наполнению галлереи на основе вышеупомянутого массива:
-// alt tag is empty
-// template id is #card, gallery container class is .gallery
-
-// получаю содержимое шаблона в переменную
+import { initialCards } from "./content.js";
+// получаю содержимое шаблона карточки в переменную.
 const cardTemplate = document.querySelector("#card").content;
-// или по без квериселектора то же самое можно сделать const cardTemplate = document.getElementById("card");
-console.log(cardTemplate); // проверяю что нашел то что нужно выводя в консоль
+// или без квериселектора то же самое можно сделать const cardTemplate = document.getElementById("card");
 
 // в переменную сохраняю html-элемент, принимающий новорожденные карточки.
 const gallery = document.querySelector(".gallery");
-console.log(gallery); // проверяю что нашел то что нужно выводя в консоль
 
-// теперь проделать все то же самое циклом с остальными элементами массива. Столько раз, сколько элементов.
+// получаю содержимое шаблона ZOOM-попапа в переменную.
+// const zoomTemplate = document.querySelector("#zoom").content;
 
+// в переменную сохраняю html-элемент BODY, принимающий новорожденные ZOOM-попапы.
+const body = document.querySelector(".body");
+
+// Наполняю галерею карточками из массива
+// методом forEach для каждого элемента массива создаю заготовку клоном нода, наполняю ее и вставляд в ДОМ аппендом
 initialCards.forEach((item, index) => {
   // клонирую содержимое шаблона из переменной cardTemplate в переменную cardElement,
   // найдя по классу контейнера внутри шаблона, а не по элементу шаблона.
@@ -130,10 +21,233 @@ initialCards.forEach((item, index) => {
 
   // наполняю содержимым каждый тег клона отдельно
   cardElement.querySelector(".gallery__img").src = initialCards[index].link;
-  cardElement.querySelector(".gallery__img").alt = initialCards[index].alt;
+  cardElement.querySelector(".gallery__img").alt = initialCards[index].name;
   cardElement.querySelector(".gallery__text").textContent = initialCards[index].name;
+  //
+  //  ZOOM-попап в процессе наполнения галлереи из массива
+  // картинка карточки
+  const imgPlace = cardElement.querySelector(".gallery__img");
+
+  // функция зумирования картинки отображает попап
+  function zoom() {
+    // нахожу попап, запихиваю в переменную
+    const zoomPopup = document.querySelector(".popup_type_zoom-image");
+
+    // наполняю попап данными из массива
+    zoomPopup.querySelector(".popup__image-zoom").src = initialCards[index].link;
+    zoomPopup.querySelector(".popup__image-zoom").alt = initialCards[index].name;
+    zoomPopup.querySelector(".popup__caption").textContent = initialCards[index].name;
+
+    // нахожу кнопку закрытия попапа, запихиваю в переменную.
+    const closeZoomPopupBtn = zoomPopup.querySelector(".popup__close-button_type_zoom-image");
+    // вешаю на кнопку обработчик события
+    closeZoomPopupBtn.addEventListener("click", () => {
+      closePopup(zoomPopup); // вызов функции с агмументом (переменная с попапок)
+    });
+
+    // отображаю ZOOM-попап
+    zoomPopup.classList.add("popup_opened");
+  }
+
+  // вешаю обработчик на саму картинку в карточке (в момент создания карточки)
+  imgPlace.addEventListener("click", () => {
+    zoom();
+  });
+  //
+  // 🗑️ кнопка удаления
+  const deletePlaceBtm = cardElement.querySelector(".gallery__delete");
+
+  // 🗑️функция удаления
+  function deleteCardElement() {
+    cardElement.remove();
+  }
+  // 🗑️действие удаления по клику на кнопке удаления
+  deletePlaceBtm.addEventListener("click", () => {
+    deleteCardElement();
+  });
+
+  // 💛 кнопка лайка
+  const likeBtn = cardElement.querySelector(".gallery__like");
+
+  // 💛 функция лайка
+  function likeCardElement() {
+    likeBtn.classList.toggle("gallery__like_active");
+  }
+  // 💛 действие лайка по клику на кнопке лайка
+  likeBtn.addEventListener("click", () => {
+    likeCardElement();
+  });
 
   // передаю это в DOM
   // в объект-приемник добавляю карточку (в конец объекта)
   gallery.append(cardElement);
 });
+//
+//  УНИВЕРСАЛЬНОЕ
+//
+// 🧢 🍿 👀 функция открытия указанного попапа.
+function openPopup(popupName) {
+  popupName.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
+}
+
+// 🧢 ❌ 🍿 функция закрытия указанного попапа.
+function closePopup(popupName) {
+  popupName.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
+}
+//
+// ПРОФИЛЬ
+//
+// 🍿 👨‍💼 весь попап профиля
+const popupProfile = document.querySelector(".popup_type_user-profile");
+
+// Форма профиля, а не весь попап для отправки формы.
+const formElementUserProfile = popupProfile.querySelector(".popup__form_type_user-profile");
+
+// html-элемент с ФИО в тексте профиля
+const userNameElement = document.querySelector(".profile__name");
+
+// html-элемент с должностью в тексте профиля
+const userJobElement = document.querySelector(".profile__job");
+
+// Поле ввода ФИО // 🔴 error
+const userNameInput = formElementUserProfile.querySelector(".popup__input_type_user-name");
+
+// Поле ввода работы
+const userJobInput = formElementUserProfile.querySelector(".popup__input_type_user-job");
+
+// 🔤 🖍️ 👨‍💼 кнопка редактирования профиля
+const editProfileBtn = document.querySelector(".profile__edit-btn");
+
+// 🆑 🖍️ 👨‍💼 👀 клик по кнопке редактирования профиля
+editProfileBtn.addEventListener("click", function () {
+  userNameInput.value = userNameElement.textContent; // из страницы в форму
+  userJobInput.value = userJobElement.textContent; // из страницы в форму
+  openPopup(popupProfile); // 👀 открытие попапа
+});
+
+// ❌ 🍿 👨‍💼 Крестик - кнопка закрытия попапа профиля
+const closePopupProfileBtn = popupProfile.querySelector(".popup__close-button_type_profile");
+
+// ❌ 🆑 👨‍💼 Клик по кнопке закрытия попапа профиля.
+closePopupProfileBtn.addEventListener("click", () => {
+  closePopup(popupProfile);
+});
+
+// 👍 Обработчик «отправки» формы UserProfile (без вызова, просто функция)
+function handleFormSubmitUserProfile(evt) {
+  evt.preventDefault(); // без перезагрузки страницы
+  userNameElement.textContent = userNameInput.value; // из формы в страницу
+  userJobElement.textContent = userJobInput.value; // из формы в страницу
+  closePopup(popupProfile); // закладываю функцию сокрытия попапа
+}
+
+// Клик по кнопке СОХРАНИТЬ в форме профиля
+//   1) Добавляю обработчик к ФОРМЕ (не к кнопке):
+//   2) Он следит за событием “submit”, а НЕ "клик"
+//   3) Он запустит функцию с букетом инструкций, а не одно действие.
+formElementUserProfile.addEventListener("submit", handleFormSubmitUserProfile);
+//
+// ПОПАП ДОБАВЛЕНИЯ МЕСТА
+//
+// кнопка добавления места
+const addPlaceBtn = document.querySelector(".profile__add-place-btn");
+
+// Весь попап добаления места
+const popupAddPlace = document.querySelector(".popup_type_new-place");
+
+// Форма добавления места, а не весь попап, для отправки формы.
+const formElementAddPlace = popupAddPlace.querySelector(".popup__form_type_add-place");
+
+// Поле ввода названия места
+const placeNameInput = formElementAddPlace.querySelector(".popup__input_type_place-name");
+
+// Поле ввода URL места
+const pleceUrlInput = formElementAddPlace.querySelector(".popup__input_type_place-url");
+
+// клик по кнопке добавления места
+addPlaceBtn.addEventListener("click", () => {
+  placeNameInput.value = ""; // опустошаю поле ввода формы
+  pleceUrlInput.value = ""; // опустошаю поле ввода формы
+  openPopup(popupAddPlace); // открытие попапа
+});
+
+// ❌ 🍿 Крестик - кнопка закрытия попапа места
+const closePopupAddPlaceBtn = popupAddPlace.querySelector(".popup__close-button_type_place");
+
+// клик по крестику - кнопке закрытия попапа места
+closePopupAddPlaceBtn.addEventListener("click", () => {
+  closePopup(popupAddPlace);
+});
+
+// Обработчик «отправки» формы нового места (без вызова, просто функция)
+function handleFormSubmitAddPlace(evt) {
+  evt.preventDefault(); // без перезагрузки страницы
+
+  // клонирую содержимое шаблона из переменной cardTemplate в переменную cardElement,
+  // найдя по классу контейнера внутри шаблона, а не по элементу шаблона.
+  const cardElement = cardTemplate.querySelector(".gallery__element").cloneNode(true);
+
+  // переношу данные из полей ввода в клонированный нод.
+  cardElement.querySelector(".gallery__text").textContent = placeNameInput.value;
+  cardElement.querySelector(".gallery__img").src = pleceUrlInput.value;
+  cardElement.querySelector(".gallery__img").alt = placeNameInput.value;
+
+  // ZOOM-попап для добавленных юзером картинок (в процессе сабмита)
+  // картинка карточки
+  const imgPlace = cardElement.querySelector(".gallery__img");
+
+  // функция зумирования картинки отображает попап
+  function zoom() {
+    // нахожу попап, запихиваю в переменную
+    const zoomPopup = document.querySelector(".popup_type_zoom-image");
+
+    // наполняю попап данными из полей ввода
+    zoomPopup.querySelector(".popup__image-zoom").src = pleceUrlInput.value;
+    zoomPopup.querySelector(".popup__image-zoom").alt = placeNameInput.value;
+    zoomPopup.querySelector(".popup__caption").textContent = placeNameInput.value;
+
+    // нахожу кнопку закрытия попапа, запихиваю в переменную.
+    const closeZoomPopupBtn = zoomPopup.querySelector(".popup__close-button_type_zoom-image");
+
+    // вешаю на кнопку обработчик события
+    closeZoomPopupBtn.addEventListener("click", () => {
+      closePopup(zoomPopup); // вызов функции с агмументом (переменная с попапок)
+    });
+
+    // отображаю ZOOM-попап
+    zoomPopup.classList.add("popup_opened");
+  }
+  // вешаю обработчик на саму картинку в карточке (в момент создания карточки)
+  imgPlace.addEventListener("click", () => {
+    zoom();
+  });
+
+  // 🗑️ кнопка удаления
+  const deletePlaceBtm = cardElement.querySelector(".gallery__delete");
+
+  // 🗑️ функция удаления
+  function deleteCardElement() {
+    cardElement.remove();
+  }
+  // 🗑️ действие удаления по клику на кнопке удаления
+  deletePlaceBtm.addEventListener("click", () => {
+    deleteCardElement();
+  });
+
+  // 💛 кнопка лайка
+  const likeBtn = cardElement.querySelector(".gallery__like");
+
+  // 💛 функция лайка
+  function likeCardElement() {
+    likeBtn.classList.toggle("gallery__like_active");
+  }
+
+  // 💛 действие лайка по клику на кнопке лайка
+  likeBtn.addEventListener("click", () => {
+    likeCardElement();
+  });
+  gallery.prepend(cardElement); // добавлю заполненный узел в дом.
+  closePopup(popupAddPlace); // закладываю функцию сокрытия попапа
+}
+// Клик по кнопке СОХРАНИТЬ в форме добавления места
+formElementAddPlace.addEventListener("submit", handleFormSubmitAddPlace);
