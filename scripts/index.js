@@ -1,156 +1,37 @@
 import { initialCards } from "./content.js";
-// получаю содержимое шаблона карточки в переменную.
-const cardTemplate = document.querySelector("#card").content;
-// или без квериселектора то же самое можно сделать const cardTemplate = document.getElementById("card");
 
-// в переменную сохраняю html-элемент, принимающий новорожденные карточки.
+// СОДЕРЖИМОЕ ШАБЛОНА КАРТОЧКИ - #document-fragment без метода *.remove()
+const cardTemplateContent = document.getElementById("card").content;
+
+// ДИВ-ОБЕРТКА КАРТОЧКИ ПО ИМЕНИ КЛАССА (html-узел)
+const galleryElement = cardTemplateContent.querySelector(".gallery__element");
+
+// Галерея КУДА КЛАСТЬ НОВЫЕ КАРТОЧКИ - (html-узел), принимающий новорожденные карточки.
 const gallery = document.querySelector(".gallery");
 
-// получаю содержимое шаблона ZOOM-попапа в переменную.
-// const zoomTemplate = document.querySelector("#zoom").content;
-
-// в переменную сохраняю html-элемент BODY, принимающий новорожденные ZOOM-попапы.
-const body = document.querySelector(".body");
-
-// Наполняю галерею карточками из массива
-// методом forEach для каждого элемента массива создаю заготовку клоном нода, наполняю ее и вставляд в ДОМ аппендом
-initialCards.forEach((item, index) => {
-  // клонирую содержимое шаблона из переменной cardTemplate в переменную cardElement,
-  // найдя по классу контейнера внутри шаблона, а не по элементу шаблона.
-  const cardElement = cardTemplate.querySelector(".gallery__element").cloneNode(true);
-
-  // наполняю содержимым каждый тег клона отдельно
-  cardElement.querySelector(".gallery__img").src = initialCards[index].link;
-  cardElement.querySelector(".gallery__img").alt = initialCards[index].name;
-  cardElement.querySelector(".gallery__text").textContent = initialCards[index].name;
-  //
-  //  ZOOM-попап в процессе наполнения галлереи из массива
-  // картинка карточки
-  const imgPlace = cardElement.querySelector(".gallery__img");
-
-  // функция зумирования картинки отображает попап
-  function zoom() {
-    // нахожу попап, запихиваю в переменную
-    const zoomPopup = document.querySelector(".popup_type_zoom-image");
-
-    // наполняю попап данными из массива
-    zoomPopup.querySelector(".popup__image-zoom").src = initialCards[index].link;
-    zoomPopup.querySelector(".popup__image-zoom").alt = initialCards[index].name;
-    zoomPopup.querySelector(".popup__caption").textContent = initialCards[index].name;
-
-    // нахожу кнопку закрытия попапа, запихиваю в переменную.
-    const closeZoomPopupBtn = zoomPopup.querySelector(".popup__close-button_type_zoom-image");
-    // вешаю на кнопку обработчик события
-    closeZoomPopupBtn.addEventListener("click", () => {
-      closePopup(zoomPopup); // вызов функции с агмументом (переменная с попапок)
-    });
-
-    // отображаю ZOOM-попап
-    zoomPopup.classList.add("popup_opened");
-  }
-
-  // вешаю обработчик на саму картинку в карточке (в момент создания карточки)
-  imgPlace.addEventListener("click", () => {
-    zoom();
-  });
-  //
-  // 🗑️ кнопка удаления
-  const deletePlaceBtm = cardElement.querySelector(".gallery__delete");
-
-  // 🗑️функция удаления
-  function deleteCardElement() {
-    cardElement.remove();
-  }
-  // 🗑️действие удаления по клику на кнопке удаления
-  deletePlaceBtm.addEventListener("click", () => {
-    deleteCardElement();
-  });
-
-  // 💛 кнопка лайка
-  const likeBtn = cardElement.querySelector(".gallery__like");
-
-  // 💛 функция лайка
-  function likeCardElement() {
-    likeBtn.classList.toggle("gallery__like_active");
-  }
-  // 💛 действие лайка по клику на кнопке лайка
-  likeBtn.addEventListener("click", () => {
-    likeCardElement();
-  });
-
-  // передаю это в DOM
-  // в объект-приемник добавляю карточку (в конец объекта)
-  gallery.append(cardElement);
-});
-//
-//  УНИВЕРСАЛЬНОЕ
-//
-// 🧢 🍿 👀 функция открытия указанного попапа.
-function openPopup(popupName) {
-  popupName.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
-}
-
-// 🧢 ❌ 🍿 функция закрытия указанного попапа.
-function closePopup(popupName) {
-  popupName.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
-}
-//
-// ПРОФИЛЬ
-//
-// 🍿 👨‍💼 весь попап профиля
-const popupProfile = document.querySelector(".popup_type_user-profile");
-
-// Форма профиля, а не весь попап для отправки формы.
-const formElementUserProfile = popupProfile.querySelector(".popup__form_type_user-profile");
-
-// html-элемент с ФИО в тексте профиля
+// ФИО в тексте профиля (html-узел)
 const userNameElement = document.querySelector(".profile__name");
 
-// html-элемент с должностью в тексте профиля
+// должность в тексте профиля (html-узел)
 const userJobElement = document.querySelector(".profile__job");
 
-// Поле ввода ФИО // 🔴 error
-const userNameInput = formElementUserProfile.querySelector(".popup__input_type_user-name");
-
-// Поле ввода работы
-const userJobInput = formElementUserProfile.querySelector(".popup__input_type_user-job");
-
-// 🔤 🖍️ 👨‍💼 кнопка редактирования профиля
+// кнопка редактирования профиля (html-узел)
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 
-// 🆑 🖍️ 👨‍💼 👀 клик по кнопке редактирования профиля
-editProfileBtn.addEventListener("click", function () {
-  userNameInput.value = userNameElement.textContent; // из страницы в форму
-  userJobInput.value = userJobElement.textContent; // из страницы в форму
-  openPopup(popupProfile); // 👀 открытие попапа
-});
-
-// ❌ 🍿 👨‍💼 Крестик - кнопка закрытия попапа профиля
-const closePopupProfileBtn = popupProfile.querySelector(".popup__close-button_type_profile");
-
-// ❌ 🆑 👨‍💼 Клик по кнопке закрытия попапа профиля.
-closePopupProfileBtn.addEventListener("click", () => {
-  closePopup(popupProfile);
-});
-
-// 👍 Обработчик «отправки» формы UserProfile (без вызова, просто функция)
-function handleFormSubmitUserProfile(evt) {
-  evt.preventDefault(); // без перезагрузки страницы
-  userNameElement.textContent = userNameInput.value; // из формы в страницу
-  userJobElement.textContent = userJobInput.value; // из формы в страницу
-  closePopup(popupProfile); // закладываю функцию сокрытия попапа
-}
-
-// Клик по кнопке СОХРАНИТЬ в форме профиля
-//   1) Добавляю обработчик к ФОРМЕ (не к кнопке):
-//   2) Он следит за событием “submit”, а НЕ "клик"
-//   3) Он запустит функцию с букетом инструкций, а не одно действие.
-formElementUserProfile.addEventListener("submit", handleFormSubmitUserProfile);
-//
-// ПОПАП ДОБАВЛЕНИЯ МЕСТА
-//
-// кнопка добавления места
+// кнопка добавления места в профиле рядом с аватаркой
 const addPlaceBtn = document.querySelector(".profile__add-place-btn");
+
+// функция, возвращающая объект popupUser с частями попапа профиля.
+const popupUser = (() => {
+  const popup = document.querySelector(".popup_type_user-profile");
+  return {
+    popup,
+    closeButton: popup.querySelector(".popup__close-button_type_profile"),
+    form: popup.querySelector(".popup__form_type_user-profile"),
+    nameInput: popup.querySelector(".popup__input_type_user-name"),
+    jobInput: popup.querySelector(".popup__input_type_user-job"),
+  };
+})(); // Последние 2 скобки не лишние - самовызывающаяся функция. В первых скобках создается анонимная функция и сразу же вызывается вторыми скобками
 
 // Весь попап добаления места
 const popupAddPlace = document.querySelector(".popup_type_new-place");
@@ -164,90 +45,162 @@ const placeNameInput = formElementAddPlace.querySelector(".popup__input_type_pla
 // Поле ввода URL места
 const pleceUrlInput = formElementAddPlace.querySelector(".popup__input_type_place-url");
 
-// клик по кнопке добавления места
+// Кнопка закрытия попапа места
+const closePopupAddPlaceBtn = popupAddPlace.querySelector(".popup__close-button");
+
+// 🧢  функция открытия указанного попапа.
+function openPopup(popupName) {
+  popupName.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
+}
+// 🧢 функция закрытия указанного попапа.
+function closePopup(popupName) {
+  popupName.classList.remove("popup_opened"); // убираю класс, делающий попап видимым
+}
+// 🧢 функция удаления указанного элемента
+function deleteCardElement(cardToDelete) {
+  cardToDelete.remove();
+}
+// 🧢 функция лайка для объекта (кнопки), передаваемого в нее
+function likeCardElement(btnToLike) {
+  btnToLike.classList.toggle("gallery__like_active");
+}
+// 🧢 функция ЗУМИРОВАНИЯ - открытие папапа zoom - только объявление без вызова
+function zoom(cardData) {
+  // ищу окошко папапа
+  const zoomPopup = document.querySelector(".popup_type_zoom-image");
+
+  // Нахожу html-узлы попапа zoom для наполнения.
+  // // Картинка попапа zoom (html-узел)
+  const popupImage = zoomPopup.querySelector(".popup__image-zoom");
+  // // Подпись попапа zoom (html-узел)
+  const popupTxt = zoomPopup.querySelector(".popup__caption");
+
+  // Наполняю попап данными из объекта (объект в форыче или в сабмите)
+  popupImage.src = cardData.link;
+  popupImage.alt = cardData.name;
+  popupTxt.textContent = cardData.name;
+
+  // Кнопка закрытия zoom попапа
+  const closeZoomPopupBtn = zoomPopup.querySelector(".popup__close-button");
+
+  // Слушатель кнопки закрытия zoom попапа
+  closeZoomPopupBtn.addEventListener("click", () => {
+    closePopup(zoomPopup); // вызов функции с агмументом (переменная с попапок)
+  });
+
+  openPopup(zoomPopup); // Открываю окошко папапа
+}
+// 🧢  Функция СОЗДАНИЯ карточки и наполнения БЕЗ добавления ее на страницу.
+// cardData - данные (объект из массива или инпутов), части которых нести в создаваемый элемент.
+function createCard(cardData) {
+  // Клонирую узел galleryElement в переменную
+  const cardElement = galleryElement.cloneNode(true);
+
+  // название места в клоне карточки (html-узел)
+  const placeName = cardElement.querySelector(".gallery__text");
+  // картинка в клоне карточки (html-узел)
+  const placeImage = cardElement.querySelector(".gallery__img");
+  // Слушатель на картинку в клоне карточки
+  placeImage.addEventListener("click", () => {
+    zoom(cardData);
+  });
+
+  // Наполню теги значениями из объекта cardData
+  placeName.textContent = cardData.name;
+  placeImage.src = cardData.link;
+  placeImage.alt = cardData.name;
+
+  // Кнопка лайка в клоне карточки (html-узел)
+  const likeBtn = cardElement.querySelector(".gallery__like");
+  // Слушатель лайка по клику на кнопке лайка
+  likeBtn.addEventListener("click", () => {
+    likeCardElement(likeBtn);
+  });
+
+  // Кнопка удаления в клоне карточки
+  const deletePlaceBtm = cardElement.querySelector(".gallery__delete");
+  // Слушатель кнопки удаления в клоне карточки
+  deletePlaceBtm.addEventListener("click", () => {
+    deleteCardElement(cardElement);
+  });
+
+  // Возврат заполненнной переменной, готовой к добавлению в ДОМ
+  return cardElement;
+}
+// 🧢 Функция сабмита формы UserProfile (без вызова, просто функция)
+function handleFormSubmitUserProfile(evt) {
+  evt.preventDefault(); // без перезагрузки страницы
+  userNameElement.textContent = popupUser.nameInput.value; // из формы в страницу
+  userJobElement.textContent = popupUser.jobInput.value; // из формы в страницу
+  closePopup(popupUser.popup); // закладываю функцию сокрытия попапа
+}
+// 🧢 Функция добавления карточек в конец
+function renderPlaceAppend(cardItem) {
+  gallery.append(cardItem); // gallery объявлена в глобальном скоупе
+}
+// 🧢 Функция добавления карточек в начало
+function renderPlacePrepend(cardItem) {
+  gallery.prepend(cardItem); // gallery объявлена в глобальном скоупе
+}
+// 🧢 Функция сабмита формы нового места (без вызова, просто функция). Сбор инфы из полей в объект cardData,
+// который скормлю функции создания карточек. Создание карточки функцией. Отрисовка карточки (рендер) - отправка в ДОМ
+function handleFormSubmitAddPlace(event) {
+  event.preventDefault(); // без перезагрузки страницы
+
+  // Сбор инфы из полей в переменные, а затем в объект cardData
+  const placeNameInputValue = placeNameInput.value;
+  const placeLinkInputValue = pleceUrlInput.value;
+
+  // В объект (НЕмассив) тащу данные из переменных из полей.
+  const cardData = {
+    name: placeNameInputValue,
+    link: placeLinkInputValue,
+  };
+
+  // Вызов функции создания и наполнения карточки.
+  // при создании карточки вешаю обработчики на фото, лайк и корзину
+  const cardElement = createCard(cardData);
+
+  // Вызов функции отображения карточки
+  renderPlacePrepend(cardElement);
+  closePopup(popupAddPlace); // закладываю функцию сокрытия попапа
+}
+
+// Наполняю галерею карточками из массива
+initialCards.forEach((cardData) => {
+  renderPlaceAppend(createCard(cardData));
+  // Вызываю функцию создания и наполнения карточки (+ добавление слушателей)
+  // Создание - клонированием. Наполнение из аргумента-объекта, подаваемого на вход .
+  // форычом элемента js-массива initialCards, где каждый элемент массива - объект.
+  // Полученную заполненную карточку отдаю функции добавления в ДОМ
+});
+
+// Слушатель кнопки добавления места
 addPlaceBtn.addEventListener("click", () => {
   placeNameInput.value = ""; // опустошаю поле ввода формы
   pleceUrlInput.value = ""; // опустошаю поле ввода формы
   openPopup(popupAddPlace); // открытие попапа
 });
 
-// ❌ 🍿 Крестик - кнопка закрытия попапа места
-const closePopupAddPlaceBtn = popupAddPlace.querySelector(".popup__close-button_type_place");
-
-// клик по крестику - кнопке закрытия попапа места
+// Слушатель кнопки закрытия попапа места
 closePopupAddPlaceBtn.addEventListener("click", () => {
   closePopup(popupAddPlace);
 });
 
-// Обработчик «отправки» формы нового места (без вызова, просто функция)
-function handleFormSubmitAddPlace(evt) {
-  evt.preventDefault(); // без перезагрузки страницы
-
-  // клонирую содержимое шаблона из переменной cardTemplate в переменную cardElement,
-  // найдя по классу контейнера внутри шаблона, а не по элементу шаблона.
-  const cardElement = cardTemplate.querySelector(".gallery__element").cloneNode(true);
-
-  // переношу данные из полей ввода в клонированный нод.
-  cardElement.querySelector(".gallery__text").textContent = placeNameInput.value;
-  cardElement.querySelector(".gallery__img").src = pleceUrlInput.value;
-  cardElement.querySelector(".gallery__img").alt = placeNameInput.value;
-
-  // ZOOM-попап для добавленных юзером картинок (в процессе сабмита)
-  // картинка карточки
-  const imgPlace = cardElement.querySelector(".gallery__img");
-
-  // функция зумирования картинки отображает попап
-  function zoom() {
-    // нахожу попап, запихиваю в переменную
-    const zoomPopup = document.querySelector(".popup_type_zoom-image");
-
-    // наполняю попап данными из полей ввода
-    zoomPopup.querySelector(".popup__image-zoom").src = pleceUrlInput.value;
-    zoomPopup.querySelector(".popup__image-zoom").alt = placeNameInput.value;
-    zoomPopup.querySelector(".popup__caption").textContent = placeNameInput.value;
-
-    // нахожу кнопку закрытия попапа, запихиваю в переменную.
-    const closeZoomPopupBtn = zoomPopup.querySelector(".popup__close-button_type_zoom-image");
-
-    // вешаю на кнопку обработчик события
-    closeZoomPopupBtn.addEventListener("click", () => {
-      closePopup(zoomPopup); // вызов функции с агмументом (переменная с попапок)
-    });
-
-    // отображаю ZOOM-попап
-    zoomPopup.classList.add("popup_opened");
-  }
-  // вешаю обработчик на саму картинку в карточке (в момент создания карточки)
-  imgPlace.addEventListener("click", () => {
-    zoom();
-  });
-
-  // 🗑️ кнопка удаления
-  const deletePlaceBtm = cardElement.querySelector(".gallery__delete");
-
-  // 🗑️ функция удаления
-  function deleteCardElement() {
-    cardElement.remove();
-  }
-  // 🗑️ действие удаления по клику на кнопке удаления
-  deletePlaceBtm.addEventListener("click", () => {
-    deleteCardElement();
-  });
-
-  // 💛 кнопка лайка
-  const likeBtn = cardElement.querySelector(".gallery__like");
-
-  // 💛 функция лайка
-  function likeCardElement() {
-    likeBtn.classList.toggle("gallery__like_active");
-  }
-
-  // 💛 действие лайка по клику на кнопке лайка
-  likeBtn.addEventListener("click", () => {
-    likeCardElement();
-  });
-  gallery.prepend(cardElement); // добавлю заполненный узел в дом.
-  closePopup(popupAddPlace); // закладываю функцию сокрытия попапа
-}
-// Клик по кнопке СОХРАНИТЬ в форме добавления места
+// Слушатель сабмита (кнопки СОХРАНИТЬ) в форме добавления места запускает функцию сабмита
 formElementAddPlace.addEventListener("submit", handleFormSubmitAddPlace);
+
+// Слушатель кнопки редактирования профиля
+editProfileBtn.addEventListener("click", function () {
+  popupUser.nameInput.value = userNameElement.textContent; // из страницы в форму
+  popupUser.jobInput.value = userJobElement.textContent; // из страницы в форму
+  openPopup(popupUser.popup); // открытие попапа
+});
+
+// Слушатель кнопки закрытия попапа профиля.
+popupUser.closeButton.addEventListener("click", () => {
+  closePopup(popupUser.popup);
+});
+
+// слушатель кнопки сабмита формы профиля = СОХРАНИТЬ в форме профиля
+popupUser.form.addEventListener("submit", handleFormSubmitUserProfile);
