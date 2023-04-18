@@ -8,5 +8,8 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  display: none;
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
 }
