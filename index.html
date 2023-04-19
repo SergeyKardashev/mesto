@@ -56,10 +56,21 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_place" type="button"></button>
         <h2 class="popup__heading">Новое место</h2>
-        <form class="popup__form popup__form_type_add-place" name="profile">
-          <input class="popup__input popup__input_type_place-name" name="placeName" type="text" placeholder="Название" />
-          <input class="popup__input popup__input_type_place-url" name="placeUrl" type="text" placeholder="Ссылка на картинку" />
-          <button class="popup__submit-button" type="submit">Создать</button>
+        <form class="popup__form popup__form_type_add-place" name="profile" novalidate>
+          <!-- place name input -->
+          <input class="popup__input popup__input_type_place-name" id="place-name" name="placeName" type="text" placeholder="Название" />
+          <span class="place-name-input-error form__input-error">class of this node is place-name-input-error.</span>
+          <!-- у инпута удалил класс form__input_invalid -->
+          <!-- у спана удалил класс form__input-error_active -->
+
+          <!-- place link input -->
+          <input class="popup__input popup__input_type_place-url" id="place-link" name="placeUrl" type="text" placeholder="Ссылка на картинку" />
+          <span class="place-url-input-error form__input-error">class of this node is place-url-input-error.</span>
+          <!-- у инпута удалил класс form__input_invalid -->
+          <!-- удалил класс form__input-error_active -->
+
+          <!-- place submit button -->
+          <button class="popup__submit-button popup__submit-button_inactive" type="submit">Создать</button>
         </form>
       </div>
     </div>
@@ -70,10 +81,22 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_profile" type="button"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="popup__form popup__form_type_user-profile" name="profile">
-          <input class="popup__input popup__input_type_user-name" name="userName" type="text" placeholder="Имя" />
-          <input class="popup__input popup__input_type_user-job" name="userJob" type="text" placeholder="Должность" />
+        <form class="popup__form popup__form_type_user-profile" name="profile" novalidate>
+          <!-- user name input -->
+          <input id="user-name" class="popup__input popup__input_type_user-name" id="user-name" name="userName" type="text" placeholder="Имя" />
+          <span class="user-name-input-error form__input-error">class of this node is user-name-input-error. </span>
+          <!-- у инпута удалил класс form__input_invalid -->
+          <!-- удалил класс form__input-error_active -->
+
+          <!-- job input -->
+          <input class="popup__input popup__input_type_user-job" id="user-job" name="userJob" type="text" placeholder="Должность" />
+          <span class="user-job-input-error form__input-error">class of this node is user-job-input-error. </span>
+          <!-- у инпута удалил класс form__input_invalid -->
+          <!-- удалил класс form__input-error_active -->
+
+          <!-- user-profile submit button -->
           <button class="popup__submit-button" type="submit">Сохранить</button>
+          <!-- тут нужна активная кнопка тк форма заполнена по дефолту -->
         </form>
       </div>
     </div>
