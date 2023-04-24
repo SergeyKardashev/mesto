@@ -1,4 +1,4 @@
-.form__input-error {
+.popup__error {
   /* строка на расстоянии 5 пикселей от поля */
   color: #ff0000;
   opacity: 0;

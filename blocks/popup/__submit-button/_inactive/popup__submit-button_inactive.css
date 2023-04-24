@@ -4,3 +4,7 @@
   color: rgba(0, 0, 0, 1);
   background-color: white;
 }
+.popup__submit-button_inactive:hover {
+  cursor: default;
+  background-color: white;
+}
