@@ -56,10 +56,23 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_place" type="button"></button>
         <h2 class="popup__heading">Новое место</h2>
-        <form class="popup__form popup__form_type_add-place" name="profile">
-          <input class="popup__input popup__input_type_place-name" name="placeName" type="text" placeholder="Название" />
-          <input class="popup__input popup__input_type_place-url" name="placeUrl" type="text" placeholder="Ссылка на картинку" />
+        <form class="popup__form popup__form_type_add-place" name="profile" novalidate>
+          <!-- place name input -->
+          <input class="popup__input popup__input_type_place-name" id="place-name" name="placeName" type="text" placeholder="Название" minlength="2" maxlength="30" required />
+          <span class="place-name-input-error popup__error"></span>
+          <!-- у инпута удалил класс popup__input_type_error -->
+          <!-- у спана удалил класс popup__error_visible -->
+
+          <!-- place link input -->
+          <input class="popup__input popup__input_type_place-url" id="place-url" name="placeUrl" type="url" placeholder="Ссылка на картинку" required />
+          <span class="place-url-input-error popup__error"></span>
+          <!-- у инпута удалил класс popup__input_type_error -->
+          <!-- удалил класс popup__error_visible -->
+
+          <!-- place submit button -->
           <button class="popup__submit-button" type="submit">Создать</button>
+          <!-- удалил класс popup__submit-button_inactive -->
+          <!-- добавил свойство disabled -->
         </form>
       </div>
     </div>
@@ -70,10 +83,22 @@
       <div class="popup__container">
         <button class="popup__close-button popup__close-button_type_profile" type="button"></button>
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="popup__form popup__form_type_user-profile" name="profile">
-          <input class="popup__input popup__input_type_user-name" name="userName" type="text" placeholder="Имя" />
-          <input class="popup__input popup__input_type_user-job" name="userJob" type="text" placeholder="Должность" />
+        <form class="popup__form popup__form_type_user-profile" name="profile" novalidate>
+          <!-- user name input -->
+          <input id="user-name" class="popup__input popup__input_type_user-name" id="user-name" name="userName" type="text" placeholder="Имя" minlength="2" maxlength="40" required />
+          <span class="user-name-input-error popup__error"></span>
+          <!-- у инпута удалил класс popup__input_type_error -->
+          <!-- удалил класс popup__error_visible -->
+
+          <!-- job input -->
+          <input class="popup__input popup__input_type_user-job" id="user-job" name="userJob" type="text" placeholder="Должность" minlength="2" maxlength="200" required />
+          <span class="user-job-input-error popup__error"></span>
+          <!-- у инпута удалил класс popup__input_type_error -->
+          <!-- удалил класс popup__error_visible -->
+
+          <!-- user-profile submit button -->
           <button class="popup__submit-button" type="submit">Сохранить</button>
+          <!-- тут нужна активная кнопка тк форма заполнена по дефолту -->
         </form>
       </div>
     </div>
@@ -82,6 +107,9 @@
 
     <div class="popup popup_type_zoom-image">
       <div class="popup__container popup__container_type_zoom-image">
+        <!-- 🔴 а не нужно ли тут добавить форму и кнопку в нее запихнуть?. Я же делаю ресет формы по открытию попапа
+        НЕТ. ИНАЧЕ БУДУТ ОШИБКИ В ДРУГИХ ЧАСТЯХ КОДА-->
+
         <button class="popup__close-button popup__close-button_type_zoom-image" type="button"></button>
         <img class="popup__image-zoom" src="./images/dombai.png" alt="" />
         <p class="popup__caption">шаблонный текст</p>
@@ -101,6 +129,7 @@
       </div>
     </template>
     <script src="./scripts/index.js" type="module"></script>
-    <script src="./scripts/validate.js"></script>
+    <script src="./scripts/validate.js" type="module"></script>
+    <!-- <script src="./scripts/validate.js"></script> -->
   </body>
 </html>
