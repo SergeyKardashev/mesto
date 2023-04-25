@@ -87,25 +87,26 @@ const zoomPopup = document.querySelector(".popup_type_zoom-image");
 //   });
 // }
 
+// 🔴 Это было закоменчено. Не факто что именно нужную версию раскомментил.
 // 🧢 функция Установить валиный статус ВСЕМ полям ОТКРЫТОГО попапа. Вызывать при зарытии попапа.
 // Бывало закрывал попап при невалидных полях, а при следующем его открытии поля ОСТАВАЛИСЬ НЕВАЛИДНЫМИ)
-// function setFormInputsValidStatus(formToSetValid) {
-//   // БУДУ ЧИСТИТЬ ФОРМУ чтобы она не хранила ошибок от прошлого откытия и закрытия.
-//   console.log("БУДУ ЧИСТИТЬ ФОРМУ functoin setFormInputsValidStatus is lounched");
-//   // Собираю все инпуты попапа в коллекцию > массив
+function setFormInputsValidStatus(formToSetValid) {
+  // БУДУ ЧИСТИТЬ ФОРМУ чтобы она не хранила ошибок от прошлого откытия и закрытия.
+  console.log("БУДУ ЧИСТИТЬ ФОРМУ functoin setFormInputsValidStatus is lounched");
+  // Собираю все инпуты попапа в коллекцию > массив
 
-//   const inputsCollection = formToSetValid.querySelectorAll(".popup__input");
-//   const inputsArr = Array.from(inputsCollection);
+  const inputsCollection = formToSetValid.querySelectorAll(".popup__input");
+  const inputsArr = Array.from(inputsCollection);
 
-//   // Прохожу по массиву инпутов, меняя статус каждому полю.
-//   inputsArr.forEach((inputToSetValid) => {
-//     // setInputStatusValid(inputToSetValid);
-//     inputToSetValid.classList.remove("popup__input_type_error"); // убрать класс красной рамки ИНПУТА
-//     const errorItemToSetValid = document.querySelector(`.${inputToSetValid.id}-input-error`);
-//     errorItemToSetValid.textContent = ""; // удалить содержимое ОШИБКИ
-//     errorItemToSetValid.classList.remove("popup__error_visible"); // выключить отображение ОШИБКИ
-//   });
-// }
+  // Прохожу по массиву инпутов, меняя статус каждому полю.
+  inputsArr.forEach((inputToSetValid) => {
+    // setInputStatusValid(inputToSetValid);
+    inputToSetValid.classList.remove("popup__input_type_error"); // убрать класс красной рамки ИНПУТА
+    const errorItemToSetValid = document.querySelector(`.${inputToSetValid.id}-input-error`);
+    errorItemToSetValid.textContent = ""; // удалить содержимое ОШИБКИ
+    errorItemToSetValid.classList.remove("popup__error_visible"); // выключить отображение ОШИБКИ
+  });
+}
 
 // 🧢  функция открытия указанного попапа.
 function openPopup(popupName) {
@@ -116,18 +117,6 @@ function openPopup(popupName) {
 
   //  добавил навешивание слушателя на оверлэй при открытии. Закрывает ПОПАП по клику на оверлее.
   closePopupByOverlay(popupName);
-
-  // 🔴 проверить попап на валидность при открытии
-  // enableValidation({
-  //   formSelector: ".popup__form",
-  //   inputSelector: ".popup__input",
-  //   submitButtonSelector: ".popup__submit-button",
-  //   inactiveButtonClass: "popup__submit-button_inactive",
-  //   inputErrorClass: "popup__input_type_error",
-  //   errorClass: "popup__error_visible",
-  //   // inactiveButtonClass: "popup__button_disabled",
-  //   // submitButtonSelector: ".popup__button",
-  // });
 }
 
 // 🧢 функция закрытия указанного попапа.
@@ -143,17 +132,18 @@ function closePopup(popupToClose) {
   // Бывало закрывал попап при невалидных полях, а при следующем его открытии поля ОСТАВАЛИСЬ НЕВАЛИДНЫМИ)
   const formToReset = popupToClose.querySelector(".popup__form");
 
-  // formToReset.reset();
-  // setFormInputsValidStatus(formToReset);
   // В ЗУМ-ПОПАПЕ НЕТ ФОРМЫ - вызывает ошибку. Поэтому проверка на наличие формы.
+
   // Жесткая проверка без приведения к типу не сработает. Думал что formToReset === true это как formToReset.
   // Автоматом приведется к булевом значению. Но не прошло
   if (Boolean(formToReset) === true) {
-    console.log("Проверено на if (formToReset)");
+    // if (formToReset === true) {
+    // if (formToReset) {
+    console.log("Успешно проверено formToReset на трушность");
     formToReset.reset();
     setFormInputsValidStatus(formToReset);
   } else {
-    console.log("Проверка if (formToReset) НЕЕЕЕ пройдена.");
+    console.log("!!!Завалена проверка formToReset на трушность!!!");
   }
 }
 
