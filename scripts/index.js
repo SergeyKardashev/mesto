@@ -38,11 +38,18 @@ const editProfileBtn = document.querySelector(".profile__edit-btn");
 const addPlaceBtn = document.querySelector(".profile__add-place-btn");
 
 // функция, возвращающая объект popupUser с частями попапа профиля.
+// 🟡 any form can be found easily
+// 🟡 любую форму можно сразу получить из document.forms по уникальному атрибуту name,
+// 🟡 который указываются в тегах form
+// 🟡 const profileForm = document.forms["profile-form"];
+// 🟡 const cardForm = document.forms["card-form"];
+
 const popupUser = (() => {
   const popup = document.querySelector(".popup_type_user-profile");
   return {
     popup,
-    form: popup.querySelector(".popup__form_type_user-profile"),
+    // form: popup.querySelector(".popup__form_type_user-profile"),
+    form: document.forms["profile-form"],
     nameInput: popup.querySelector(".popup__input_type_user-name"),
     jobInput: popup.querySelector(".popup__input_type_user-job"),
   };
@@ -52,9 +59,9 @@ const popupUser = (() => {
 const popupAddPlace = document.querySelector(".popup_type_new-place");
 
 // Форма добавления места, а не весь попап, для отправки формы.
-const formElementAddPlace = popupAddPlace.querySelector(
-  ".popup__form_type_add-place"
-);
+// 🟡 любую форму можно сразу получить из document.forms по уникальному атрибуту name
+const formElementAddPlace = document.forms["add-place-form"];
+// const formElementAddPlace = popupAddPlace.querySelector(".popup__form_type_add-place");
 
 // Поле ввода названия места
 const placeNameInput = formElementAddPlace.querySelector(
@@ -84,43 +91,12 @@ const closePopupButtonsCollection = document.querySelectorAll(
 );
 const closePopupButtonsArray = Array.from(closePopupButtonsCollection);
 
-// 🧢 функция Установить валиный статус ВСЕМ полям ОТКРЫТОГО попапа. Вызывать при зарытии попапа.
-// Бывало закрывал попап при невалидных полях, а при следующем его открытии поля ОСТАВАЛИСЬ НЕВАЛИДНЫМИ)
-function setFormInputsValidStatus(formToSetValid) {
-  // БУДУ ЧИСТИТЬ ФОРМУ чтобы она не хранила ошибок от прошлого откытия и закрытия.
-  // Собираю все инпуты попапа в коллекцию > массив
-  const inputsCollection = formToSetValid.querySelectorAll(".popup__input");
-  const inputsArr = Array.from(inputsCollection);
-
-  // Прохожу по массиву инпутов, меняя статус каждому полю.
-  inputsArr.forEach((inputToSetValid) => {
-    inputToSetValid.classList.remove("popup__input_type_error"); // убрать класс красной рамки ИНПУТА
-    const errorItemToSetValid = document.querySelector(
-      `.${inputToSetValid.id}-input-error`
-    );
-    errorItemToSetValid.textContent = ""; // удалить содержимое ОШИБКИ
-    errorItemToSetValid.classList.remove("popup__error_visible"); // выключить отображение ОШИБКИ
-  });
-}
-
 // 🧢  функция открытия указанного попапа.
 function openPopup(popupName) {
+  // 🔴🔴🔴 МОЖЕТ проверить попап на наличие формы в нем??? Если она есть, запустить сброс полей.
   popupName.classList.add("popup_opened"); // добавление класса ОТКРЫТО для попапа
-
-  // Добавил на весь файл слушатель клавы.  // Колбэк ИФом по эскейпу закрывает ОТКРЫТый попап.
+  // Добавил на весь файл слушатель клавы. // Колбэк ИФом по эскейпу закрывает ОТКРЫТый попап.
   document.addEventListener("keydown", closePopupByEscape);
-}
-
-// 🧢  функция открытия указанного попапа С ФОРМОЙ. Вызываю ее только для попапов с формами.
-// Просто разным кнопкам разные функции вызываю. Зум-попап открываю без сброса полей простой функцией.
-// А попапы с полями открываю этой крученой функцией.
-function openPopupWithForm(popupName) {
-  // Ставлю валиность ВСЕМ полям открываемого попапа.
-  // Бывало закрывал попап при невалидных полях, а при следующем его открытии поля ОСТАВАЛИСЬ НЕВАЛИДНЫМИ)
-  const formToReset = popupName.querySelector(".popup__form");
-  formToReset.reset();
-  setFormInputsValidStatus(formToReset);
-  openPopup(popupName); //  вызываю открытие формы
 }
 
 // 🧢 функция закрытия указанного попапа.
@@ -128,7 +104,6 @@ function closePopup(popupToClose) {
   popupToClose.classList.remove("popup_opened");
   document.removeEventListener("keydown", closePopupByEscape); // Удаляю слушатель клавы.
 }
-
 //
 // 🧢 функция закрытия попапа по эскейпу
 // НЕ даю попап в виде Аргумента функции. Нахожу его внутри.
@@ -145,16 +120,6 @@ function closePopupByEscape(evt) {
   }
 }
 
-// 🧢 функция удаления указанного элемента
-function deleteCardElement(cardToDelete) {
-  cardToDelete.remove();
-}
-
-// 🧢 функция лайка для объекта (кнопки), передаваемого в нее
-function likeCardElement(btnToLike) {
-  btnToLike.classList.toggle("gallery__like_active");
-}
-
 // 🧢 Функция сабмита формы UserProfile
 function handleFormSubmitUserProfile(evt) {
   evt.preventDefault(); // без перезагрузки страницы
@@ -162,8 +127,6 @@ function handleFormSubmitUserProfile(evt) {
   userJobElement.textContent = popupUser.jobInput.value; // из формы в страницу
   closePopup(popupUser.popup); // закладываю функцию сокрытия попапа
 }
-// // 🧢 Функция добавления карточек в конец раньше была тут
-// // 🧢 Функция добавления карточек в начало раньше была тут
 
 // 🧢 Функция закрытия попапа по клику на оверлее - колбэк для функции closePopupByOverlay.
 // Сюда нельзя передать из вызывающей функции аргумент кроме ивента,
@@ -179,53 +142,50 @@ function setListenerClosePopupByOverlay(popupName) {
   popupName.addEventListener("click", closePopupByOverlay);
 }
 
-// 🧢  Функция создания карточки
-function createCard(cardData) {
-  const createdCard = new Card(cardData, "#card", openPopup, zoomPopup);
-  return createdCard;
+// 🧢 🟢 Функция - отрисовки карточки, (т.е. куска html) передаваемой в аргументе.
+function renderCard(cardItem) {
+  gallery.prepend(cardItem); // gallery объявлена в глобальном скоупе
 }
 
-// 🧢 Функция сабмита формы нового места. Инфа из полей в объект cardData, его скормлю функции создания карточек.
+// 🧢  функция открытия попапа ЗУМа - функция зумирования
+function handleCardClick(cardData) {
+  popupImage.src = cardData.link;
+  popupImage.alt = cardData.name;
+  popupTxt.textContent = cardData.name;
+  openPopup(zoomPopup);
+}
+
+// 🧢  🟢 Функция создания карточки
+function createCard(cardData) {
+  const cardItem = new Card(cardData, "#card", handleCardClick);
+  renderCard(cardItem.getCard());
+}
+
+// 🧢 🟢 Функция сабмита формы нового места. Инфа из полей в объект cardData, его скормлю функции создания карточек.
 function handleFormSubmitAddPlace(evt) {
   evt.preventDefault(); // без перезагрузки страницы
-
   const cardData = {
     name: placeNameInput.value, // Сбор инфы из полей в объект cardData
     link: pleceUrlInput.value, // Сбор инфы из полей в объект cardData
   };
-
-  const cardElement = createCard(cardData);
-  renderCardBefore(cardElement.getCard());
+  createCard(cardData);
+  formElementAddPlace.reset(); // сброс формы после сабмита
   closePopup(popupAddPlace);
 }
 
-// 🧢 Функция - Наполняю галлерею карточками из массива данных initialCards
-function renderCardBefore(cardItem) {
-  gallery.prepend(cardItem); // gallery объявлена в глобальном скоупе
-}
-function renderCardAfter(cardItem) {
-  gallery.append(cardItem); // gallery объявлена в глобальном скоупе
-}
-
+// 🟢🟢🟢🟢🟢🟢🟢🟢 Наполняю галлерею карточками из массива объектов initialCards
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card", openPopup, zoomPopup);
-  renderCardAfter(card.getCard());
+  createCard(cardData);
 });
 
-// Слушатель кнопки открытые попапа добавления места
+// 🟢 Слушатель кнопки открытыя попапа добавления места
 addPlaceBtn.addEventListener("click", (evt) => {
-  // отлючил опустошение полей, т.к. в функции openPopupWithForm прописан ресет формы при отправке.
-  // placeNameInput.value = "";
-  // pleceUrlInput.value = "";
-
-  // Отключаю кнопку хардкодом при открытии попапа в 2 действия. Функцией не работает.
-  submitPlaceButton.classList.add("popup__submit-button_inactive"); // 1) стиль неактивной кнопки
-  submitPlaceButton.setAttribute("disable", ""); // 2) свойство отключения в разметке.
-
-  openPopupWithForm(popupAddPlace); // открытие попапа
+  formValidators["add-place-form"].resetValidation();
+  // сброс ошибок и тогл был такой: addPleceFormValidator.resetValidation();
+  openPopup(popupAddPlace); // открытие попапа
 });
 
-// Один навешиватель слушателей всем крестикам взамен ручного навешивания слушателей крестиков трех попапов
+// навешиватель слушателей ВСЕМ крестикам взамен ручного навешивания слушателей крестиков трех попапов
 closePopupButtonsArray.forEach((button) => {
   // находим 1 раз ближайший к крестику попап
   const popup = button.closest(".popup");
@@ -233,17 +193,18 @@ closePopupButtonsArray.forEach((button) => {
   button.addEventListener("click", () => closePopup(popup));
 });
 
-// Слушатели оверлеев всех попапов без условия. Форычом с функцией добавлю слушатель оверлея.
-popupsArray.forEach((popupItem) => {
-  setListenerClosePopupByOverlay(popupItem);
-});
+// Слушатели оверлеев всех попапов без условия.
+// Форычом с функцией добавлю слушатель оверлея.
+popupsArray.forEach(setListenerClosePopupByOverlay);
 
 // Слушатель сабмита (кнопки СОХРАНИТЬ) в форме добавления места запускает функцию сабмита
 formElementAddPlace.addEventListener("submit", handleFormSubmitAddPlace);
 
-// Слушатель кнопки редактирования профиля
+// 🟢 Слушатель кнопки открытыя попапа редактирования профиля
 editProfileBtn.addEventListener("click", function () {
-  openPopupWithForm(popupUser.popup); // открытие попапа
+  formValidators["profile-form"].resetValidation();
+  // сброс ошибок и тогл был такой: profileFormValidator.resetValidation();
+  openPopup(popupUser.popup); // открытие попапа
   popupUser.nameInput.value = userNameElement.textContent; // из страницы в форму
   popupUser.jobInput.value = userJobElement.textContent; // из страницы в форму
 });
@@ -260,10 +221,42 @@ const config = {
   errorClass: "popup__error_visible",
 };
 
-// запускаю валидацию
+// Старый способ запустить валидацию:
+// // const addPleceFormValidator = new FormValidator(config, formElementAddPlace);
+// // addPleceFormValidator.enableValidation();
+// // const profileFormValidator = new FormValidator(config, popupUser.form);
+// // profileFormValidator.enableValidation();
+//
+//
+//
+//
 
-const addPleceFormValidator = new FormValidator(config, formElementAddPlace);
-addPleceFormValidator.enableValidation();
+//  --------- способ универсально создать экземпляры валидаторов всех форм, -------------
+// поместив их все в один объект, а потом брать из него валидатор по атрибуту name,
+// который задан для формы. Это универсально и для любого кол-ва форм подходит.
 
-const profileFormValidator = new FormValidator(config, popupUser.form);
-profileFormValidator.enableValidation();
+const formValidators = {}; // создаю константу с пустысм объектом.
+
+// -- Включение валидации --
+
+// Создаю функцию enableValidation - НЕ ВЫЗЫВАЮ!!!
+const enableValidation = (config) => {
+  // Собираю массив форм (массив кусков разметки, а не имён)
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+
+  formList.forEach((formElement) => {
+    // Каждой форме создаю объект-экземпляр класса FormValidator
+    const validator = new FormValidator(config, formElement);
+
+    // Пишу имя формы в переменную formName (получаем данные из атрибута `name` у формы)
+    const formName = formElement.getAttribute("name");
+
+    // Вношу свойства в объект. (вот тут в объект записываем под именем формы)
+    // Ключ свойства = имя формы. Значение свойства = разметка формы.
+    formValidators[formName] = validator;
+    validator.enableValidation(); // вызов метода класса, а не рекурсия
+  });
+};
+
+enableValidation(config); // вызов НОВОЙ функции
+// еще вызываю метод resetValidation дважды для двух форм в двух местах кода.

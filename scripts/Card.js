@@ -1,55 +1,47 @@
 class Card {
-  constructor(cardData, templateSelector, openPopup, zoomPopup) {
+  constructor(cardData, templateSelector, onClick) {
+    this._onClick = onClick;
     this._cardData = cardData;
     this._templateSelector = templateSelector;
-    this._openPopup = openPopup;
-    this._zoomPopup = zoomPopup;
+    this._template = document.querySelector(this._templateSelector).content;
   }
-
-  _onDelete = () => {
+  _handleDelete = () => {
     if (this._card) {
       this._card.remove();
     }
   };
-
-  _onLike = () => {
-    this._card
-      .querySelector(".gallery__like")
-      .classList.toggle("gallery__like_active");
-  };
-
-  _onZoom = () => {
-    const zoomPopup = document.querySelector(".popup_type_zoom-image");
-    const popupImage = zoomPopup.querySelector(".popup__image-zoom");
-    const popupTxt = zoomPopup.querySelector(".popup__caption");
-    popupImage.src = this._cardData.link;
-    popupImage.alt = this._cardData.name;
-    popupTxt.textContent = this._cardData.name;
-    this._openPopup(this._zoomPopup);
+  _toggleLike = () => {
+    this._likeButton.classList.toggle("gallery__like_active");
   };
 
   _setListeners = () => {
-    this._card
-      .querySelector(".gallery__delete")
-      .addEventListener("click", this._onDelete);
-    this._card
-      .querySelector(".gallery__like")
-      .addEventListener("click", this._onLike);
-    this._card
-      .querySelector(".gallery__img")
-      .addEventListener("click", this._onZoom);
+    this._deleteButton.addEventListener("click", this._handleDelete);
+    this._likeButton.addEventListener("click", this._toggleLike);
+    this._cardImage.addEventListener("click", () => {
+      this._onClick(this._cardData);
+    });
   };
 
   _createCard() {
-    this._template = document.querySelector(this._templateSelector).content;
+    // нельзя перенести this._card и все что в нем ищется в конструктор,
+    // т.к. ниже в методе getCard условие на отсутствие карточки.
+    // Если объявить ее в конструкторе, то условие ее найдет и не создаст новую.
+    // Почитать про патерн Singleton или одиночка.
     this._card = this._template.cloneNode(true).children[0];
-    this._card.querySelector(".gallery__img").src = this._cardData.link;
-    this._card.querySelector(".gallery__text").textContent =
-      this._cardData.name;
+    this._cardImage = this._card.querySelector(".gallery__img");
+    this._cardText = this._card.querySelector(".gallery__text");
+    this._deleteButton = this._card.querySelector(".gallery__delete");
+    this._likeButton = this._card.querySelector(".gallery__like");
+
+    this._cardImage.src = this._cardData.link;
+    this._cardImage.alt = this._cardData.name;
+    this._cardText.textContent = this._cardData.name;
     this._setListeners();
   }
 
   getCard = () => {
+    // console.log(this._onClick);
+    // console.log(this._cardData);
     if (!this._card) {
       this._createCard();
     }
