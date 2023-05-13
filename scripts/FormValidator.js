@@ -55,9 +55,7 @@ class FormValidator {
   resetValidation = () => {
     this._toggleButton();
     this.formFields.forEach((formField) => {
-      formField.input.classList.remove(this.config.inputErrorClass);
-      formField.error.textContent = "";
-      formField.error.classList.remove(this.config.errorClass);
+      this._setInputValid(formField);
     });
   };
 
