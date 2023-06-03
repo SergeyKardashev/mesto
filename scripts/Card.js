@@ -44,6 +44,7 @@ class Card {
     // console.log(this._cardData);
     if (!this._card) {
       this._createCard();
+      console.log(this._card);
     }
     return this._card;
   };
