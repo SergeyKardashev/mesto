@@ -10,7 +10,7 @@
 export class Popup {
   constructor(popupSelector) {
     this.popup = document.querySelector(popupSelector);
-    // console.log(this.popup);
+    console.log(this.popup);
     this.closeButton = this.popup.querySelector(".popup__close-button");
     // this.setEventListeners();
     // console.log(this.closeButton);
@@ -59,7 +59,7 @@ export class Popup {
 
   setEventListeners() {
     this.closeButton.addEventListener("click", () => {
-      console.log("hobaaaa");
+      // console.log("hobaaaa");
       this.close();
     });
   }

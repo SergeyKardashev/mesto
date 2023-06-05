@@ -56,117 +56,129 @@ const myUserInfo = new UserInfo({
   jobSelector: ".profile__job",
 });
 
+// при загрузке страницы устанавливаем в нее данные профиля хардкодом.
 const renderInitialProfile = () => {
   myUserInfo.setUserInfo({
     name: "Жак-Ив Кусто",
     job: "Исследователь океана",
   });
 };
+renderInitialProfile();
 
-const renderInitialCards = () => {
-  const renderer = (data) => {
-    const myCard = new Card(data, "#card", handleCardClick);
+// Наполняю поля формы данными со страницы через метод класса UserInf
+popupUser.nameInput.value = myUserInfo.getUserInfo().name;
+popupUser.jobInput.value = myUserInfo.getUserInfo().job;
 
-    // вставляю в разметку то, что вернет метод - клонированный и заполненный фрагмент разметки
-    mySection.container.append(myCard.getCard());
-  };
+// объявдегие колбэка, а не вызов
+const renderer = (data) => {
+  const myCard = new Card(data, "#card", handleCardClick);
 
-  const gallerySelector = ".gallery";
-  const mySection = new Section(
-    {
-      items: initialCards,
-      renderer: renderer,
-    },
-    gallerySelector
-  );
-
-  mySection.renderInitialCards();
+  // вставляю в разметку то, что вернет метод - клонированный и заполненный фрагмент разметки
+  mySection.container.append(myCard.getCard());
 };
+
+const mySection = new Section(
+  {
+    items: initialCards,
+    renderer: renderer,
+  },
+  ".gallery"
+);
+
+mySection.renderInitialCards();
+
 // Вешаю 2 слушателия в начале
 const addInitialListeners = () => {
   //
   // Слушатель кнопки редактирования профиля
-  const addProfileBtnListener = () => {
-    const addProfileBtn = document.querySelector(".profile__edit-btn");
+  const editProfileBtnListener = () => {
+    const editProfileBtn = document.querySelector(".profile__edit-btn");
 
-    addProfileBtn.addEventListener("click", function () {
+    editProfileBtn.addEventListener("click", function () {
       formValidators["profile-form"].resetValidation();
 
+      // описываю функцию сабмита профиля заранее
       const handleSubmitUserProfile = ({ name, job }) => {
         myUserInfo.setUserInfo({ name, job });
-        // фрагменты кода
-        // const formUserInfo = new UserInfo({
-        //   nameSelector: "#user-name",
-        //   jobSelector: "#user-job",
-        // });
-
-        // 🔴 Дописать аргументы метода - он возвращает данные в форму
-        // formUserInfo.getUserInfo();
-
-        // 🔴 По сабмиту формы ее данные пишем в страницу
-        // 🔴 Перенести отсюда в слушатель сабмита.
-        // pageUserInfo.setUserInfo(formUserInfo.getUserInfo());
       };
-      //
+
+      // передаю функцию забмита профиля колбэком при создании объекта попапа
       const popupEditProfileForm = new PopupWithForm(
         ".popup_type_user-profile",
-        handleSubmitUserProfile
+        () => {
+          handleSubmitUserProfile(myUserInfo.getUserInfo());
+        }
       );
-      //
       popupEditProfileForm.setEventListeners();
+      // инпуты наполнить объектом из ретерна метода _getInputValues
+      // setUserInfo({ name, job })
+      popupEditProfileForm._getInputValues();
       popupEditProfileForm.open();
     });
   };
-  //
   // Слушатель кнопки добавления карточки
-  const addAddPlaceBtnListener = () => {
+  const addPlaceBtnListener = () => {
     const addPlaceButton = document.querySelector(".profile__add-place-btn");
 
-    addPlaceButton.addEventListener("click", (evt) => {
-      formValidators["add-place-form"].resetValidation();
+    // колбэк слушатель
+    const handleSubmitAddPlace = (evt) => {
+      // console.log(evt);
+      // console.log(evt.target);
+      // console.log(evt.curentTarget);
 
-      const handleSubmitAddPlace = (evt) => {
-        evt.preventDefault();
+      // таргет - тот кто заколил этот хэндлер (сабмит), т.е. форма.
 
-        // таргет - тот кто заколил этот хэндлер (сабмит), т.е. форма.
-        const placeNameInput = evt.target.querySelector(
-          ".popup__input_type_place-name"
-        );
-        const pleceUrlInput = evt.target.querySelector(
-          ".popup__input_type_place-url"
-        );
+      // !!!!!! метод querySelector есть у document, но его нет у DOM-элемента
 
-        const cardDataCollected = {
-          name: placeNameInput.value,
-          link: pleceUrlInput.value,
-        };
+      // const placeNameInput = evt.target.querySelector(
+      //   ".popup__input_type_place-name"
+      // );
+      // const pleceUrlInput = evt.target.querySelector(
+      //   ".popup__input_type_place-url"
+      // );
+      const placeNameInput = document.querySelector(
+        ".popup__input_type_place-name"
+      );
+      const pleceUrlInput = document.querySelector(
+        ".popup__input_type_place-url"
+      );
 
-        const card1by1 = new Card(cardDataCollected, "#card", handleCardClick);
-        mySection.addItem(card1by1.getCard());
+      const cardDataCollected = {
+        name: placeNameInput.value,
+        link: pleceUrlInput.value,
       };
 
-      // const addPlacePopup = new PopupWithForm(
-      //   ".popup_type_new-place",
-      //   handleSubmitAddPlace
-      // );
-      // addPlacePopup.setEventListeners();
-      // addPlacePopup.open();
+      const card1by1 = new Card(cardDataCollected, "#card", handleCardClick);
+      mySection.addItem(card1by1.getCard());
+    };
+
+    addPlaceButton.addEventListener("click", (evt) => {
+      const addPlacePopup = new PopupWithForm(".popup_type_new-place", () => {
+        handleSubmitAddPlace(evt);
+      });
+      formValidators["add-place-form"].resetValidation();
+      addPlacePopup.setEventListeners();
+      addPlacePopup.open();
+    });
+
+    const addPlaceForm = document.querySelector(".popup__form_type_add-place");
+
+    addPlaceForm.addEventListener("submit", (evt) => {
+      formValidators["add-place-form"].resetValidation();
+
+      evt.preventDefault();
     });
   };
-  //
   // Запуск навешивателей
-  addProfileBtnListener();
-  addAddPlaceBtnListener();
+  editProfileBtnListener();
+  addPlaceBtnListener();
 };
 
 /*
-Ниже самовызывающаяся функция чтобы вынести из глобального скоупа
-кучу функций, переменных и вызовов.
+Ниже самовызывающаяся функция чтобы вынести из глобального скоупа кучу функций, переменных и вызовов.
 Она запускает 3 описанных выше функции с группами комманд
 */
 (() => {
-  renderInitialCards();
-  renderInitialProfile();
   addInitialListeners();
 })();
 
@@ -231,5 +243,3 @@ enableValidation(config); // вызов НОВОЙ функции
 // mySection.renderInitialCards();
 // console.log(mySection.initialData);
 // const shitSection = new Section({ initialCards, renderer }, gallerySelector);
-
-// 🟢 Слушатель кнопки открытыя попапа добавления места
