@@ -7,10 +7,14 @@ import { Popup } from "./Popup.js";
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
+    this.zoomedImg = this.popup.querySelector(".popup__image-zoom");
+    this.caption = this.popup.querySelector(".popup__caption");
+  }
+
+  open({ name, link }) {
+    super.open();
+    this.zoomedImg.src = link;
+    this.zoomedImg.alt = name;
+    this.caption.textContent = name;
   }
 }
-// Картинка попапа zoom (html-узел)
-// const popupImage = zoomPopup.querySelector(".popup__image-zoom");
-
-// Подпись попапа zoom (html-узел)
-// const popupTxt = zoomPopup.querySelector(".popup__caption");

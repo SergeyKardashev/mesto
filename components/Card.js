@@ -5,22 +5,22 @@ class Card {
     this._templateSelector = templateSelector;
     this._template = document.querySelector(this._templateSelector).content;
   }
-  _handleDelete = () => {
+  _handleDelete() {
     if (this._card) {
       this._card.remove();
     }
-  };
-  _toggleLike = () => {
+  }
+  _toggleLike() {
     this._likeButton.classList.toggle("gallery__like_active");
-  };
+  }
 
-  _setListeners = () => {
-    this._deleteButton.addEventListener("click", this._handleDelete);
-    this._likeButton.addEventListener("click", this._toggleLike);
-    this._cardImage.addEventListener("click", () => {
-      this._onClick(this._cardData);
-    });
-  };
+  _setListeners() {
+    this._deleteButton.addEventListener("click", () => this._handleDelete());
+    this._likeButton.addEventListener("click", () => this._toggleLike());
+    this._cardImage.addEventListener("click", () =>
+      this._onClick(this._cardData)
+    );
+  }
 
   _createCard() {
     // нельзя перенести this._card и все что в нем ищется в конструктор,
@@ -39,15 +39,12 @@ class Card {
     this._setListeners();
   }
 
-  getCard = () => {
-    // console.log(this._onClick);
-    // console.log(this._cardData);
+  getCard() {
     if (!this._card) {
       this._createCard();
-      console.log(this._card);
     }
     return this._card;
-  };
+  }
 }
 
 export default Card;

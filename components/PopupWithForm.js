@@ -4,6 +4,7 @@ import { UserInfo } from "./UserInfo.js";
 /*
 Создайте класс PopupWithForm, который наследует от Popup. Этот класс:
 Кроме селектора попапа принимает в конструктор колбэк сабмита формы.
+
 Содержит приватный метод _getInputValues, который собирает данные
 всех полей формы.
 Перезаписывает родительский метод setEventListeners.
@@ -18,21 +19,18 @@ export class PopupWithForm extends Popup {
   constructor(popupSelector, onSubmit) {
     super(popupSelector);
     this.onSubmit = onSubmit;
-    this.onSubmit = this.onSubmit.bind(this);
     this.form = this.popup.querySelector(".popup__form");
     this.submitButton = this.popup.querySelector(".popup__submit-button");
     this._inputList = Array.from(this.form.querySelectorAll(".popup__input"));
-    console.log(this._inputList);
   }
 
+  // собирает данные всех полей формы.
   _getInputValues() {
     this._formInputValues = {};
 
     this._inputList.forEach((input) => {
       this._formInputValues[input.name] = input.value;
     });
-    console.log(this._formInputValues);
-
     return this._formInputValues;
   }
 

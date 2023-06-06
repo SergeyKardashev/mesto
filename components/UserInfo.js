@@ -28,19 +28,12 @@ export class UserInfo {
     this.nameInput = document.querySelector(".user-name");
   }
 
-  // ============ ИДЕЯ ================
-  // Использовать шаблонную строку типа `.${input.id}-input-error`
-  //
-
-  // возвращает объект с данными пользователя.
-  // Чтобы данные пользователя вставить в ФОРМУ при открытии.
   getUserInfo() {
     return {
       name: this._name.textContent,
       job: this._job.textContent,
     };
   }
-
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo({ name, job }) {
     this._name.textContent = name; // <h1> на странице
