@@ -1,5 +1,5 @@
 import { Popup } from "./Popup.js";
-import { UserInfo } from "./UserInfo.js";
+// import { UserInfo } from "./UserInfo.js";
 
 /*
 Создайте класс PopupWithForm, который наследует от Popup. Этот класс:

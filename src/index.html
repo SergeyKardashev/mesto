@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="body">
     <div class="page">
@@ -15,7 +14,7 @@
         <!-- Может быть сделать ссылкой  -->
         <img
           class="header__logo"
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="логотип проекта Место Россия"
         />
       </header>
@@ -29,7 +28,7 @@
           <div class="profile__account">
             <img
               class="profile__avatar"
-              src="./images/avatar.png"
+              src="<%=require('./images/avatar.png')%>"
               alt="фото профиля"
             />
             <!-- текстовая часть профиля -->
@@ -168,7 +167,8 @@
           class="popup__close-button popup__close-button_type_zoom-image"
           type="button"
         ></button>
-        <img class="popup__image-zoom" src="./images/dombai.png" alt="" />
+        <img class="popup__image-zoom" src="<%=require('./images/dombai.png')%>
+        alt="" />
         <p class="popup__caption">шаблонный текст</p>
       </div>
     </div>
@@ -178,15 +178,16 @@
     <template id="card">
       <div class="gallery__element">
         <button class="gallery__delete" type="button"></button>
-        <img class="gallery__img" src="./images/dombai.png" alt="" />
+        <img
+          class="gallery__img"
+          src="<%=require('./images/dombai.png')%>"
+          alt=""
+        />
         <div class="gallery__caption-wrap">
           <h2 class="gallery__text">шаблонный текст</h2>
           <button class="gallery__like" type="button"></button>
         </div>
       </div>
     </template>
-    <!-- <script src="./scripts/Card.js" type="module"></script> -->
-    <script src="./pages/index.js" type="module"></script>
-    <!-- <script src="./scripts/FormValidator.js" type="module"></script> -->
   </body>
 </html>

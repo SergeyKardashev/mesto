@@ -11,6 +11,8 @@
 - html
 - css
 - js
+- ООП
+- webpack
 
 **Исходник**
 
