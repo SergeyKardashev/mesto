@@ -25,7 +25,6 @@ export class UserInfo {
   constructor({ nameSelector, jobSelector }) {
     this._name = document.querySelector(nameSelector); // page element, NOT ITPUT
     this._job = document.querySelector(jobSelector); // page element, NOT ITPUT
-    this.nameInput = document.querySelector(".user-name");
   }
 
   getUserInfo() {

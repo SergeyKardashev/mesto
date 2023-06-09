@@ -1,46 +1,48 @@
 class FormValidator {
   constructor(config, form) {
-    this.config = config;
-    this.form = form;
-    this.submitButton = this.form.querySelector(
-      this.config.submitButtonSelector
+    this._config = config;
+    this._form = form;
+    this._submitButton = this._form.querySelector(
+      this._config.submitButtonSelector
     );
-    this.inputs = this.form.querySelectorAll(this.config.inputSelector);
-    this.inputsArray = Array.from(this.inputs);
-    this.formFields = this.inputsArray.map((input) => ({
+    this._inputs = this._form.querySelectorAll(this._config.inputSelector);
+    this._inputsArray = Array.from(this._inputs);
+    this._formFields = this._inputsArray.map((input) => ({
       input: input,
-      error: this.form.querySelector(`.${input.id}-input-error`),
+      error: this._form.querySelector(`.${input.id}-input-error`),
     }));
   }
 
   _enableButton() {
-    this.submitButton.removeAttribute("disabled", "");
-    this.submitButton.classList.remove(this.config.inactiveButtonClass);
+    // this._submitButton.removeAttribute("disabled"); // полная запись
+    this._submitButton.disabled = false; // краткая версия
+    this._submitButton.classList.remove(this._config.inactiveButtonClass);
   }
 
   _disableButton() {
-    this.submitButton.setAttribute("disabled", "");
-    this.submitButton.classList.add(this.config.inactiveButtonClass);
+    this._submitButton.disabled = true; // краткая версия
+    // this._submitButton.setAttribute("disabled", "true"); // полная версия
+    this._submitButton.classList.add(this._config.inactiveButtonClass);
   }
 
   _toggleButton = () => {
-    if (this.form.checkValidity()) {
-      this._enableButton(this.config, this.submitButton);
+    if (this._form.checkValidity()) {
+      this._enableButton();
     } else {
-      this._disableButton(this.config, this.submitButton);
+      this._disableButton();
     }
   };
 
   _setInputValid = (formField) => {
-    formField.input.classList.remove(this.config.inputErrorClass);
+    formField.input.classList.remove(this._config.inputErrorClass);
     formField.error.textContent = "";
-    formField.error.classList.remove(this.config.errorClass);
+    formField.error.classList.remove(this._config.errorClass);
   };
 
   _setInputInvalid = (formField) => {
-    formField.input.classList.add(this.config.inputErrorClass);
+    formField.input.classList.add(this._config.inputErrorClass);
     formField.error.textContent = formField.input.validationMessage;
-    formField.error.classList.add(this.config.errorClass);
+    formField.error.classList.add(this._config.errorClass);
   };
 
   _checkInputValidity = (formField) => {
@@ -54,16 +56,16 @@ class FormValidator {
   // ощистка форм от ошибок, оставленных при прошлом закрытии формы.
   resetValidation = () => {
     this._toggleButton();
-    this.formFields.forEach((formField) => {
+    this._formFields.forEach((formField) => {
       this._setInputValid(formField);
     });
   };
 
   _setListeners = () => {
-    this.formFields.forEach((formField) => {
+    this._formFields.forEach((formField) => {
       formField.input.addEventListener("input", () => {
         this._checkInputValidity(formField);
-        this._toggleButton(this.config, this.form);
+        this._toggleButton(this._config, this._form);
       });
     });
   };

@@ -7,14 +7,14 @@ import { Popup } from "./Popup.js";
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-    this.zoomedImg = this.popup.querySelector(".popup__image-zoom");
-    this.caption = this.popup.querySelector(".popup__caption");
+    this._zoomedImg = this._popup.querySelector(".popup__image-zoom");
+    this._caption = this._popup.querySelector(".popup__caption");
   }
 
   open({ name, link }) {
     super.open();
-    this.zoomedImg.src = link;
-    this.zoomedImg.alt = name;
-    this.caption.textContent = name;
+    this._zoomedImg.src = link;
+    this._zoomedImg.alt = name;
+    this._caption.textContent = name;
   }
 }

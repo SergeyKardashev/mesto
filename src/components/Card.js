@@ -1,6 +1,6 @@
 class Card {
-  constructor(cardData, templateSelector, onClick) {
-    this._onClick = onClick;
+  constructor(cardData, templateSelector, onImageClick) {
+    this._onImageClick = onImageClick;
     this._cardData = cardData;
     this._templateSelector = templateSelector;
     this._template = document.querySelector(this._templateSelector).content;
@@ -8,6 +8,7 @@ class Card {
   _handleDelete() {
     if (this._card) {
       this._card.remove();
+      this._card = null; // Лучше при удалении карточки очистить ссылку на DOM-элемент:
     }
   }
   _toggleLike() {
@@ -18,7 +19,7 @@ class Card {
     this._deleteButton.addEventListener("click", () => this._handleDelete());
     this._likeButton.addEventListener("click", () => this._toggleLike());
     this._cardImage.addEventListener("click", () =>
-      this._onClick(this._cardData)
+      this._onImageClick(this._cardData)
     );
   }
 

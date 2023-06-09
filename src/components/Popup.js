@@ -9,33 +9,27 @@
 */
 export class Popup {
   constructor(popupSelector) {
-    this.popup = document.querySelector(popupSelector);
-    this.closeButton = this.popup.querySelector(".popup__close-button");
+    this._popup = document.querySelector(popupSelector);
+    this._closeButton = this._popup.querySelector(".popup__close-button");
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this._handleEscClose = this._handleEscClose.bind(this);
-    this.closePopupByOverlay = this.closePopupByOverlay.bind(this);
+    this._closePopupByOverlay = this._closePopupByOverlay.bind(this);
   }
 
-  closePopupByOverlay(evt) {
+  _closePopupByOverlay(evt) {
     if (evt.target.classList.contains("popup")) {
       this.close();
     }
   }
 
   open() {
-    this.popup.classList.add("popup_opened");
+    this._popup.classList.add("popup_opened");
     document.addEventListener("keydown", this._handleEscClose);
-
-    // добавление слушателя на Оверлей
-    this.popup.addEventListener("click", this.closePopupByOverlay);
-    this.closeButton.addEventListener("click", () => {
-      this.close();
-    });
   }
 
   close() {
-    this.popup.classList.remove("popup_opened");
+    this._popup.classList.remove("popup_opened");
     document.removeEventListener("keydown", this._handleEscClose); // Удаляю слушатель клавы.
   }
 
@@ -46,8 +40,9 @@ export class Popup {
   }
 
   setEventListeners() {
-    this.closeButton.addEventListener("click", () => {
-      this.close();
-    });
+    // добавление слушателя на Оверлей
+    this._popup.addEventListener("click", this._closePopupByOverlay);
+
+    this._closeButton.addEventListener("click", () => this.close());
   }
 }

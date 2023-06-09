@@ -1,13 +1,12 @@
 import {
   initialCards,
-  config,
+  validationConfig,
   popupUser,
   addPlaceButton,
-  addPlaceForm,
   placeNameInput,
   pleceUrlInput,
   editProfileBtn,
-} from "../components/constants.js";
+} from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
@@ -17,43 +16,44 @@ import { UserInfo } from "../components/UserInfo.js";
 
 import "./index.css"; // импорт главного файла стилей. Такая запись только для вебпака
 
-//
+// 🧢  функция открытия попапа ЗУМа - функция зумирования
+const handleCardClick = (cardData) => zoomPopup.open(cardData);
 
-// 🧢 🔴 Функция создания карточки
-// функция создает, но не возвращает инстанс класса.
+// 🧢 🔴 Функция создания карточки. Функция создает, но не возвращает инстанс класса.
 // Она возвращает работы метода getCard() каласса Card, то есть разметку карточки полностью готовую к вставке
 const createCard = (...args) => new Card(...args).getCard();
 // занесли все аргументы передаваемые в функцию в массив ...args. Перечитать и тренировать rest, spread
 
 // 🧢 Функция-колбэк. Обявление, а не вызов
-const renderCards = (data) => {
+const renderCard = (data) => {
   // создаем переменную, заносим в нее результат работы функции, т.е. разметку
-  const myCard = createCard(data, "#card", handleCardClick);
+  const cardToAdd = createCard(data, "#card", handleCardClick);
 
   // вставляю в разметку то, что вернет метод - клонированный и заполненный фрагмент разметки
-  mySection.addItem(myCard);
+  cardSection.addItem(cardToAdd);
 };
 
-const mySection = new Section(
+const cardSection = new Section(
   {
     items: initialCards,
-    renderer: renderCards,
+    renderer: renderCard,
   },
   ".gallery"
 );
 
-mySection.renderItems();
+cardSection.renderItems();
 
 // 🧢 описываю функцию-колбэк сабмита профиля заранее
-const handleSubmitUserProfile = ({ name, job }) => {
+const handleSubmitProfile = ({ name, job }) => {
   myUserInfo.setUserInfo({ name, job });
+  popupProfile.close();
 };
 
 // попапу профиля передаю функцию сабмита профиля колбэком при создании инстанса попапа
-const popupEditProfile = new PopupWithForm(
+const popupProfile = new PopupWithForm(
   ".popup_type_user-profile",
   (inputVaues) => {
-    handleSubmitUserProfile(inputVaues);
+    handleSubmitProfile(inputVaues);
   }
 );
 
@@ -63,9 +63,10 @@ const myUserInfo = new UserInfo({
 });
 
 // вешаю слушатели попапу профиля
-popupEditProfile.setEventListeners();
+popupProfile.setEventListeners();
 
-editProfileBtn.addEventListener("click", function () {
+// 🧢 👨‍💼 колбэк кнопки редактирования профиля - откроет попап
+const editProfile = () => {
   formValidators["profile-form"].resetValidation();
   // Наполняю поля формы данными со страницы через метод класса UserInf
 
@@ -75,51 +76,52 @@ editProfileBtn.addEventListener("click", function () {
   popupUser.nameInput.value = name;
   popupUser.jobInput.value = job;
 
-  popupEditProfile.open();
-});
+  popupProfile.open();
+};
+
+// 👨‍💼
+editProfileBtn.addEventListener("click", () => editProfile());
 
 // 🧢 колбэк слушателя сабмита карточки
-const handleSubmitAddPlace = () => {
+const handleSubmitAddPlace = (formData) => {
+  formValidators["add-place-form"].resetValidation();
+
   const cardDataCollected = {
-    name: placeNameInput.value,
-    link: pleceUrlInput.value,
+    name: formData.placeName,
+    link: formData.placeUrl,
   };
 
   const card1by1 = new Card(cardDataCollected, "#card", handleCardClick);
-  mySection.addItem(card1by1.getCard());
+  cardSection.addItem(card1by1.getCard());
+  addPlacePopup.close();
 };
 
+const addPlacePopup = new PopupWithForm(".popup_type_new-place", (formData) => {
+  handleSubmitAddPlace(formData);
+});
+
+addPlacePopup.setEventListeners();
+
 addPlaceButton.addEventListener("click", (evt) => {
-  const addPlacePopup = new PopupWithForm(".popup_type_new-place", () => {
-    handleSubmitAddPlace(evt);
-  });
   formValidators["add-place-form"].resetValidation();
-  addPlacePopup.setEventListeners();
   addPlacePopup.open();
 });
 
-addPlaceForm.addEventListener("submit", (evt) => {
-  formValidators["add-place-form"].resetValidation();
+const zoomPopup = new PopupWithImage(".popup_type_zoom-image");
 
-  evt.preventDefault();
-});
-
-const cardPopup = new PopupWithImage(".popup_type_zoom-image");
-
-// 🧢  функция открытия попапа ЗУМа - функция зумирования
-function handleCardClick(cardData) {
-  cardPopup.open(cardData);
-}
+zoomPopup.setEventListeners();
 
 const formValidators = {}; // создаю константу с пустысм объектом.
 
 // 🧢 описываю функцию валитатор
-const enableValidation = (config) => {
+const enableValidation = (validationConfig) => {
   // Собираю массив форм (массив кусков разметки, а не имён)
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  const formList = Array.from(
+    document.querySelectorAll(validationConfig.formSelector)
+  );
 
   formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
+    const validator = new FormValidator(validationConfig, formElement);
 
     const formName = formElement.getAttribute("name");
 
@@ -128,4 +130,4 @@ const enableValidation = (config) => {
   });
 };
 
-enableValidation(config); // вызов функции
+enableValidation(validationConfig); // вызов функции

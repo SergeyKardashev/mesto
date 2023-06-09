@@ -31,7 +31,7 @@ export const initialCards = [
   },
 ];
 
-export const config = {
+export const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__submit-button",
@@ -55,10 +55,10 @@ export const addPlaceButton = document.querySelector(".profile__add-place-btn");
 export const addPlaceForm = document.querySelector(
   ".popup__form_type_add-place"
 );
-export const placeNameInput = addPlaceForm.querySelector(
-  ".popup__input_type_place-name"
-);
-export const pleceUrlInput = addPlaceForm.querySelector(
-  ".popup__input_type_place-url"
-);
+// export const placeNameInput = addPlaceForm.querySelector(
+//   ".popup__input_type_place-name"
+// );
+// export const pleceUrlInput = addPlaceForm.querySelector(
+//   ".popup__input_type_place-url"
+// );
 export const editProfileBtn = document.querySelector(".profile__edit-btn");
