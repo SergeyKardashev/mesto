@@ -11,8 +11,11 @@
 - html
 - css
 - js
+- БЭМ
 - ООП
+- модульный подход
 - webpack
+- iron butt
 
 **Исходник**
 
@@ -20,6 +23,6 @@
 
 **GitHub Pages**
 
-- [Ссылка на проект на GitHub Pages](https://sergeykardashev.github.io/mesto/)
+- [Ссылка на проект на GitHub Pages](https://sergeykardashev.github.io/mesto/) временно не работает. Вебпак
 
-Свежачок: валидация форм.
+Свежачок: webpack.
