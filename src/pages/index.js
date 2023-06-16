@@ -13,12 +13,46 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
+import { PopupWithConfirm } from "../components/PopupWithConfirm.js";
 
 import "./index.css"; // импорт главного файла стилей. Такая запись только для вебпака
 
 // 🧢  функция открытия попапа ЗУМа - функция зумирования
 const handleCardClick = (cardData) => zoomPopup.open(cardData);
+//
+//
 
+//
+//
+//// колбек по конфирму (сабмит попапа с подтверждением).
+// Отдаю его при создании карточки классу Card.
+function handleDelete(card) {
+  confirmPopup.open(() => {
+    api
+      .delete(card._cardData._id)
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка удаления: ${res.status}`);
+      })
+      .then(() => {
+        card.handleDelete();
+        confirmPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+}
+//
+export const confirmPopup = new PopupWithConfirm(".popup_type_confirm-del");
+confirmPopup.setEventListeners();
+//
+//
+//
+
+//
 // 🧢 🔴 Функция создания карточки. Функция создает, но не возвращает инстанс класса.
 // Она возвращает работы метода getCard() каласса Card, то есть разметку карточки полностью готовую к вставке
 const createCard = (...args) => new Card(...args).getCard();
@@ -38,7 +72,7 @@ const api = new Api({
 // 🧢 Функция-колбэк. Обявление, а не вызов
 const renderCard = (data) => {
   // создаем переменную, заносим в нее результат работы функции, т.е. разметку
-  const cardToAdd = createCard(data, "#card", handleCardClick);
+  const cardToAdd = createCard(data, "#card", handleCardClick, handleDelete);
 
   // вставляю в разметку то, что вернет метод - клонированный и заполненный фрагмент разметки
   cardSection.addItem(cardToAdd);
@@ -111,7 +145,12 @@ const handleSubmitAddPlace = (formData) => {
     })
     .then((cardDataFromApi) => {
       console.log(cardDataFromApi);
-      const card1by1 = new Card(cardDataFromApi, "#card", handleCardClick);
+      const card1by1 = new Card(
+        cardDataFromApi,
+        "#card",
+        handleCardClick,
+        handleDelete
+      );
       cardSection.addItem(card1by1.getCard());
       addPlacePopup.close();
     })

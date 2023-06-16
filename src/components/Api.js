@@ -38,14 +38,27 @@ export class Api {
   }
 
   // 5. Отображение количества лайков карточки
-  getLikesNumber() {
-    return fetch(`а не нужно ли это писать
-    сразу в методе отрисовки карточки чтобы не брать
-    инфу отдельным запросом`);
+  // getLikesNumber() {
+  //   return fetch(`а не нужно ли это писать
+  //   сразу в методе отрисовки карточки чтобы не брать
+  //   инфу отдельным запросом`);
+  // }
+
+  delete(cardId) {
+    return fetch(`${this.options.baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this.options.headers,
+    });
   }
 }
 
 /*
+7. Удаление карточки
+Чтобы удалить карточку, отправьте DELETE-запрос:
+DELETE https://mesto.nomoreparties.co/v1/cohortId/cards/cardId
+
+
+
 4. Добавление новой карточки
 Чтобы добавить на сервер новую карточку, отправьте POST-запрос:
 POST https://mesto.nomoreparties.co/v1/cohortId/cards
