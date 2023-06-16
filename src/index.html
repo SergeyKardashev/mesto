@@ -39,7 +39,7 @@
                 <button class="profile__edit-btn" type="button"></button>
               </div>
               <!-- вношу данные профиля в index.js -->
-              <p class="profile__job">Исследователь океана</p>
+              <p class="profile__about">Исследователь океана</p>
             </div>
           </div>
           <!-- button add photo -->
@@ -137,18 +137,18 @@
           <!-- у инпута удалил класс popup__input_type_error -->
           <!-- удалил класс popup__error_visible -->
 
-          <!-- job input -->
+          <!-- about input -->
           <input
-            class="popup__input popup__input_type_user-job"
-            id="user-job"
-            name="job"
+            class="popup__input popup__input_type_user-about"
+            id="user-about"
+            name="about"
             type="text"
-            placeholder="Должность"
+            placeholder="Обо мне"
             minlength="2"
             maxlength="200"
             required
           />
-          <span class="user-job-input-error popup__error"></span>
+          <span class="user-about-input-error popup__error"></span>
           <!-- у инпута удалил класс popup__input_type_error -->
           <!-- удалил класс popup__error_visible -->
 
@@ -167,9 +167,32 @@
           class="popup__close-button popup__close-button_type_zoom-image"
           type="button"
         ></button>
-        <img class="popup__image-zoom" src="<%=require('./images/dombai.png')%>
-        alt="" />
+        <img
+          class="popup__image-zoom"
+          src="<%=require('./images/dombai.png')%>"
+          alt=""
+        />
         <p class="popup__caption">шаблонный текст</p>
+      </div>
+    </div>
+
+    <!-- popup CONFIRM DELETE -->
+
+    <div class="popup popup_type_confirm-del popup_opened">
+      <div class="popup__container popup__container_type_confirm-del">
+        <h2 class="popup__heading">Вы уверены?</h2>
+        <button
+          class="popup__close-button popup__close-button_type_confirm-del"
+          type="button"
+        ></button>
+        <form
+          class="popup__form popup__form_type_confirm-del"
+          name="profile-form"
+          novalidate
+        >
+          <!-- confirm delete submit button -->
+          <button class="popup__submit-button" type="submit">Да</button>
+        </form>
       </div>
     </div>
 
@@ -185,7 +208,10 @@
         />
         <div class="gallery__caption-wrap">
           <h2 class="gallery__text">шаблонный текст</h2>
-          <button class="gallery__like" type="button"></button>
+          <div class="gallery__like-wrap">
+            <button class="gallery__like" type="button"></button>
+            <span class="gallery__like-number">99</span>
+          </div>
         </div>
       </div>
     </template>

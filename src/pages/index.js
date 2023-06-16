@@ -1,11 +1,10 @@
 import {
-  initialCards,
+  // initialCards,
   validationConfig,
   popupUser,
   addPlaceButton,
-  placeNameInput,
-  pleceUrlInput,
   editProfileBtn,
+  likeNumber,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -13,6 +12,7 @@ import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
 
 import "./index.css"; // импорт главного файла стилей. Такая запись только для вебпака
 
@@ -24,6 +24,17 @@ const handleCardClick = (cardData) => zoomPopup.open(cardData);
 const createCard = (...args) => new Card(...args).getCard();
 // занесли все аргументы передаваемые в функцию в массив ...args. Перечитать и тренировать rest, spread
 
+// Инстанс Api должен быть единственным!
+//  200161f1-5909-4319-b9ce-fec02ac5663d
+//  cohort-68
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-68",
+  headers: {
+    authorization: "200161f1-5909-4319-b9ce-fec02ac5663d",
+    "Content-Type": "application/json",
+  },
+});
+
 // 🧢 Функция-колбэк. Обявление, а не вызов
 const renderCard = (data) => {
   // создаем переменную, заносим в нее результат работы функции, т.е. разметку
@@ -33,20 +44,31 @@ const renderCard = (data) => {
   cardSection.addItem(cardToAdd);
 };
 
-const cardSection = new Section(
-  {
-    items: initialCards,
-    renderer: renderCard,
-  },
-  ".gallery"
-);
-
-cardSection.renderItems();
+// Экземпляр класса UserInfo создается единожды
+export const myUserInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__about",
+});
 
 // 🧢 описываю функцию-колбэк сабмита профиля заранее
-const handleSubmitProfile = ({ name, job }) => {
-  myUserInfo.setUserInfo({ name, job });
-  popupProfile.close();
+const handleSubmitProfile = ({ name, about }) => {
+  // 3. Редактирование профиля - данные идут на сервер.
+  api
+    .editProfile(name, about)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка сабмита: ${res.status}`);
+    })
+    .then((data) => {
+      console.log("дата патча профиля: ", data);
+      myUserInfo.setUserInfo(data);
+      popupProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 // попапу профиля передаю функцию сабмита профиля колбэком при создании инстанса попапа
@@ -56,12 +78,6 @@ const popupProfile = new PopupWithForm(
     handleSubmitProfile(inputVaues);
   }
 );
-
-const myUserInfo = new UserInfo({
-  nameSelector: ".profile__name",
-  jobSelector: ".profile__job",
-});
-
 // вешаю слушатели попапу профиля
 popupProfile.setEventListeners();
 
@@ -71,10 +87,10 @@ const editProfile = () => {
   // Наполняю поля формы данными со страницы через метод класса UserInf
 
   // деструктуризация. Переменные не покинут пределы слушателя
-  const { name, job } = myUserInfo.getUserInfo();
+  const { name, about } = myUserInfo.getUserInfo();
 
   popupUser.nameInput.value = name;
-  popupUser.jobInput.value = job;
+  popupUser.aboutInput.value = about;
 
   popupProfile.open();
 };
@@ -85,15 +101,23 @@ editProfileBtn.addEventListener("click", () => editProfile());
 // 🧢 колбэк слушателя сабмита карточки
 const handleSubmitAddPlace = (formData) => {
   formValidators["add-place-form"].resetValidation();
-
-  const cardDataCollected = {
-    name: formData.placeName,
-    link: formData.placeUrl,
-  };
-
-  const card1by1 = new Card(cardDataCollected, "#card", handleCardClick);
-  cardSection.addItem(card1by1.getCard());
-  addPlacePopup.close();
+  api
+    .addCard({ name: formData.placeName, link: formData.placeUrl })
+    .then((res) => {
+      if (res) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка в создании карточки: ${res.status}`);
+    })
+    .then((cardDataFromApi) => {
+      console.log(cardDataFromApi);
+      const card1by1 = new Card(cardDataFromApi, "#card", handleCardClick);
+      cardSection.addItem(card1by1.getCard());
+      addPlacePopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const addPlacePopup = new PopupWithForm(".popup_type_new-place", (formData) => {
@@ -131,3 +155,42 @@ const enableValidation = (validationConfig) => {
 };
 
 enableValidation(validationConfig); // вызов функции
+
+//
+//
+// ПОЛУЧАЮ ИЗНАЧАЛЬНЫЕ ФИО ПРОФИЛЯ И ВСТАВЛЯЮ В СТРАНИЦУ
+api
+  .setInitialUserInfo()
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  })
+  .then((result) => {
+    const userData = {};
+    userData.name = result.name;
+    userData.about = result.about;
+    myUserInfo.setUserInfo(userData);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// ПОЛУЧАЮ ИЗНАЧАЛЬНЫЕ КАРТОЧКИ
+const cardSection = new Section(renderCard, ".gallery");
+
+api
+  .getInitialCards()
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибочка получения карточек: ${res.status}`);
+  })
+  .then((cardsData) => {
+    cardSection.renderItems(cardsData);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

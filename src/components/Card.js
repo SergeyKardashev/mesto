@@ -33,10 +33,12 @@ class Card {
     this._cardText = this._card.querySelector(".gallery__text");
     this._deleteButton = this._card.querySelector(".gallery__delete");
     this._likeButton = this._card.querySelector(".gallery__like");
+    this._likes = this._card.querySelector(".gallery__like-number");
 
     this._cardImage.src = this._cardData.link;
     this._cardImage.alt = this._cardData.name;
     this._cardText.textContent = this._cardData.name;
+    this._likes.textContent = this._cardData.likes.length;
     this._setListeners();
   }
 

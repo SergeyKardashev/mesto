@@ -23,6 +23,6 @@
 
 **GitHub Pages**
 
-- [Ссылка на проект на GitHub Pages](https://sergeykardashev.github.io/mesto/) временно не работает. Вебпак
+- [Ссылка на проект на GitHub Pages](https://sergeykardashev.github.io/mesto/)
 
-Свежачок: webpack.
+Обновление 2023-06-14
