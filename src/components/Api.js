@@ -89,10 +89,11 @@ export class Api {
     });
   }
 
-  avatarUpd() {
+  avatarEdit(avatar) {
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.options.headers,
+      body: JSON.stringify({ avatar: avatar }),
     })
       .then((res) => {
         if (res.ok) {

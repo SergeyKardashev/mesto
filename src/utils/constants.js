@@ -64,3 +64,7 @@ export const addPlaceForm = document.querySelector(
 export const editProfileBtn = document.querySelector(".profile__edit-btn");
 
 export const likeNumber = document.querySelector(".gallery__like-number");
+
+export const editAvatarBtn = document.querySelector(
+  ".profile__avatar-edit-btn"
+);

@@ -24,7 +24,7 @@ export class UserInfo {
     this._nameElement = document.querySelector(nameSelector); // page element, NOT ITPUT
     this._aboutElement = document.querySelector(aboutSelector); // page element, NOT ITPUT
     this.data = {};
-    this._avatarElement = document.querySelector(".profile__avatar");
+    this._avatarElement = document.querySelector(".profile__avatar-edit-btn");
   }
 
   // возвращает объект данных профиля

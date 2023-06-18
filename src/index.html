@@ -31,18 +31,7 @@
               type="button"
               aria-label="обновить аватар"
             ></button>
-            <!-- <div class="profile__avatar-wrap">
-              <img
-                class="profile__avatar"
-                src="<%=require('./images/avatar.png')%>"
-                alt="фото профиля"
-              />
-              <button
-                class="profile__avatar-edit-btn"
-                type="button"
-                aria-label="обновить аватар"
-              ></button>
-            </div> -->
+
             <!-- текстовая часть профиля -->
             <div class="profile__txt">
               <!-- обертка имени и кнопки -->
@@ -167,6 +156,39 @@
           <!-- user-profile submit button -->
           <button class="popup__submit-button" type="submit">Сохранить</button>
           <!-- тут нужна активная кнопка тк форма заполнена по дефолту -->
+        </form>
+      </div>
+    </div>
+
+    <!-- popup EDIT AVATAR -->
+
+    <div class="popup popup_type_avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close-button popup__close-button_type_avatar"
+          type="button"
+        ></button>
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form
+          class="popup__form popup__form_type_avatar"
+          name="profile-form"
+          novalidate
+        >
+          <!-- avatar URL input -->
+          <input
+            class="popup__input popup__input_type_avatar"
+            id="user-name"
+            name="name"
+            type="text"
+            placeholder="Имя"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <span class="avatar-input-error popup__error"></span>
+
+          <!-- user-profile submit button -->
+          <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>

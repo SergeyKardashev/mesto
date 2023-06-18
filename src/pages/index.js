@@ -5,6 +5,7 @@ import {
   addPlaceButton,
   editProfileBtn,
   likeNumber,
+  editAvatarBtn,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -252,11 +253,51 @@ enableValidation(validationConfig); // вызов функции
 //
 
 // 🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// Не уверен, что правильно понял.
-// 1) На сердечко повешен один слушатель с развилкой по условию.
-// 2) При клике обхожу массив лайков методом some.
-//    2.1) Если метод встретит в массиве мой айдишник, то выполнит запрос на удаление лайка.
-//    2.2) Если метод не встретит, то на добавление лайка.
-// 3) В then обоих методов прописать 2 действия:
-//    3.1 внесение цифры из ответа внутрь карточки
-//    3.2 перекраска середчка. Не при помощи toggle, а при помощи addClass/removeClass
+
+// 🧢 описываю функцию-колбэк сабмита профиля заранее
+// const handleSubmitProfile = ({ name, about }) => {
+//   // 3. Редактирование профиля - данные идут на сервер.
+//   api
+//     .editProfile(name, about)
+//     .then((res) => {
+//       if (res.ok) {
+//         return res.json();
+//       }
+//       return Promise.reject(`Ошибка сабмита: ${res.status}`);
+//     })
+//     .then((data) => {
+//       console.log("дата патча профиля: ", data);
+//       myUserInfo.setUserInfo(data);
+//       popupProfile.close();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+
+// вешаю слушатель на аватар
+editAvatarBtn.addEventListener("click", () => {});
+
+// вешаю слушатель на аватар
+// document
+//   .querySelector(".profile__avatar-edit-btn")
+//   .addEventListener("click", () => {});
+
+// console.log("editAvatarBtn ", editAvatarBtn);
+
+function handleAvatarEdit(inputValue) {
+  api
+    .avatarEdit(inputValue)
+    .then((newAvatarLink) => {
+      console.log("сорс авы с апи: ", newAvatarLink);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  myUserInfo.setUserInfo(inputValue);
+}
+
+// popup AVATAR URL
+const popupAvatar = new PopupWithForm(".popup_type_avatar", handleAvatarEdit);
+popupAvatar.setEventListeners();
