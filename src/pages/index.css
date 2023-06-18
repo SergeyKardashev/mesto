@@ -40,6 +40,7 @@
 
 @import url(../blocks/gallery/__like/_active/gallery__like_active.css);
 @import url(../blocks/gallery/__delete/gallery__delete.css);
+@import url(../blocks/gallery/__delete/_hidden/gallery__delete_hidden.css);
 
 /* footer */
 

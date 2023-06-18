@@ -21,10 +21,7 @@ import "./index.css"; // импорт главного файла стилей. 
 const handleCardClick = (cardData) => zoomPopup.open(cardData);
 //
 //
-
-//
-//
-//// колбек по конфирму (сабмит попапа с подтверждением).
+//// 🧢 колбек по конфирму (сабмит попапа с подтверждением).
 // Отдаю его при создании карточки классу Card.
 function handleDelete(card) {
   confirmPopup.open(() => {
@@ -46,21 +43,15 @@ function handleDelete(card) {
   });
 }
 //
-export const confirmPopup = new PopupWithConfirm(".popup_type_confirm-del");
+const confirmPopup = new PopupWithConfirm(".popup_type_confirm-del");
 confirmPopup.setEventListeners();
 //
 //
-//
-
-//
-// 🧢 🔴 Функция создания карточки. Функция создает, но не возвращает инстанс класса.
-// Она возвращает работы метода getCard() каласса Card, то есть разметку карточки полностью готовую к вставке
-const createCard = (...args) => new Card(...args).getCard();
+// 🧢 🔴 Функция создания заполненной разметки карточки. Функция создает, но не возвращает инстанс класса.
+// Возвращает рез-т работы метода getCard каласса Card, т.е. заполненную разметку карточки
+// const createCard = (...args) => new Card(...args).getCard();
 // занесли все аргументы передаваемые в функцию в массив ...args. Перечитать и тренировать rest, spread
 
-// Инстанс Api должен быть единственным!
-//  200161f1-5909-4319-b9ce-fec02ac5663d
-//  cohort-68
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-68",
   headers: {
@@ -69,14 +60,74 @@ const api = new Api({
   },
 });
 
-// 🧢 Функция-колбэк. Обявление, а не вызов
-const renderCard = (data) => {
-  // создаем переменную, заносим в нее результат работы функции, т.е. разметку
-  const cardToAdd = createCard(data, "#card", handleCardClick, handleDelete);
+function handleLike(cardInstance) {
+  if (cardInstance.isLiked) {
+    api.removeLike(cardInstance._cardData).then((cardData) => {
+      cardInstance._likesElement.textContent = cardData.likes.length;
+      cardInstance._likeButton.classList.toggle("gallery__like_active");
+    });
+  } else {
+    api.addLike(cardInstance._cardData).then((cardData) => {
+      cardInstance._likesElement.textContent = cardData.likes.length;
+      cardInstance._likeButton.classList.toggle("gallery__like_active");
+    });
+  }
+}
 
-  // вставляю в разметку то, что вернет метод - клонированный и заполненный фрагмент разметки
+let userID = "";
+
+// 🧢 Функция-колбэк добавления карточи. Декларация. НЕ вызов. Используется форычом.
+const renderCard = (data) => {
+  // в var тащу результат работы функции = разметку, а НЕ объект
+  const cardToAdd = new Card(
+    data,
+    "#card",
+    handleCardClick,
+    handleDelete,
+    handleLike,
+    myUserInfo.data._id
+  ).getCard();
+
   cardSection.addItem(cardToAdd);
 };
+
+// ПОЛУЧАЮ ИЗНАЧАЛЬНЫЕ КАРТОЧКИ
+const cardSection = new Section(renderCard, ".gallery");
+
+const promiseInitialUserInfo = api.setInitialUserInfo();
+const promiseInitialCards = api.getInitialCards();
+
+Promise.all([promiseInitialUserInfo, promiseInitialCards])
+  .then(([responseInitialUserInfo, responseInitialCards]) => {
+    // userID - переменная в глобальном скоупе.
+    // Ее отдаю классу Card для сличения айдишников
+    userID = responseInitialUserInfo._id;
+    console.log(responseInitialUserInfo);
+    console.log("filled userID in promise ", userID);
+
+    // const userData = {};
+    // userData.name = responseInitialUserInfo.name;
+    // userData.about = responseInitialUserInfo.about;
+    // userData.id = responseInitialUserInfo._id;
+    // userData.avatar = responseInitialUserInfo.avatar;
+    myUserInfo.setUserInfo(responseInitialUserInfo);
+
+    // myUserInfo._name = "";
+    // myUserInfo._name = "";
+    // myUserInfo.data = responseInitialUserInfo;
+
+    // responseInitialCards - массив объектов карточек для отрисовки
+    console.log(responseInitialCards);
+    console.log("%c myUserInfo ", "background: darkblue", myUserInfo);
+    console.log("%c user_id ", " color: lime", myUserInfo.data._id);
+
+    // renderItems- колбэк. Создает+наполняет разметку аргументом.
+    // Отдает ее вставить.
+    cardSection.renderItems(responseInitialCards);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Экземпляр класса UserInfo создается единожды
 export const myUserInfo = new UserInfo({
@@ -141,15 +192,17 @@ const handleSubmitAddPlace = (formData) => {
       if (res) {
         return res.json();
       }
-      return Promise.reject(`Ошибка в создании карточки: ${res.status}`);
+      return Promise.reject(`Ошибка создания карточки: ${res.status}`);
     })
     .then((cardDataFromApi) => {
-      console.log(cardDataFromApi);
+      console.log("cardDataFromApi ", cardDataFromApi);
       const card1by1 = new Card(
         cardDataFromApi,
         "#card",
         handleCardClick,
-        handleDelete
+        handleDelete,
+        handleLike,
+        myUserInfo.data._id
       );
       cardSection.addItem(card1by1.getCard());
       addPlacePopup.close();
@@ -197,39 +250,13 @@ enableValidation(validationConfig); // вызов функции
 
 //
 //
-// ПОЛУЧАЮ ИЗНАЧАЛЬНЫЕ ФИО ПРОФИЛЯ И ВСТАВЛЯЮ В СТРАНИЦУ
-api
-  .setInitialUserInfo()
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then((result) => {
-    const userData = {};
-    userData.name = result.name;
-    userData.about = result.about;
-    myUserInfo.setUserInfo(userData);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
-// ПОЛУЧАЮ ИЗНАЧАЛЬНЫЕ КАРТОЧКИ
-const cardSection = new Section(renderCard, ".gallery");
-
-api
-  .getInitialCards()
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибочка получения карточек: ${res.status}`);
-  })
-  .then((cardsData) => {
-    cardSection.renderItems(cardsData);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// Не уверен, что правильно понял.
+// 1) На сердечко повешен один слушатель с развилкой по условию.
+// 2) При клике обхожу массив лайков методом some.
+//    2.1) Если метод встретит в массиве мой айдишник, то выполнит запрос на удаление лайка.
+//    2.2) Если метод не встретит, то на добавление лайка.
+// 3) В then обоих методов прописать 2 действия:
+//    3.1 внесение цифры из ответа внутрь карточки
+//    3.2 перекраска середчка. Не при помощи toggle, а при помощи addClass/removeClass

@@ -11,6 +11,7 @@ export class Section {
   }
 
   addItem(htmlElement) {
+    // может быть тут сличать айдишники - проверять на владельца
     this.container.prepend(htmlElement);
   }
 }

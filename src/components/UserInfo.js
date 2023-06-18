@@ -21,20 +21,32 @@
 // input Жак-Ив = name
 export class UserInfo {
   constructor({ nameSelector, aboutSelector }) {
-    this._name = document.querySelector(nameSelector); // page element, NOT ITPUT
-    this._about = document.querySelector(aboutSelector); // page element, NOT ITPUT
+    this._nameElement = document.querySelector(nameSelector); // page element, NOT ITPUT
+    this._aboutElement = document.querySelector(aboutSelector); // page element, NOT ITPUT
+    this.data = {};
+    this._avatarElement = document.querySelector(".profile__avatar");
   }
 
-  // считывает фио со страницы и отдает объектом
+  // возвращает объект данных профиля
   getUserInfo() {
-    return {
-      name: this._name.textContent,
-      about: this._about.textContent,
-    };
+    return this.data;
+    //
+    // считывает фио со страницы и отдает объектом
+    // return {
+    //   name: this._name.textContent,
+    //   about: this._about.textContent,
+    // };
   }
+
   // принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo({ name, about }) {
-    this._name.textContent = name; // <h1> на странице
-    this._about.textContent = about; // <p> на странице
+  setUserInfo(userData) {
+    this.data = userData;
+    this._nameElement.textContent = this.data.name; // <h1> на странице
+    this._aboutElement.textContent = this.data.about; // <p> на странице
+    this._avatarElement.src = this.data.avatar; // <img> на странице
   }
+  // setUserInfo({ name, about }) {
+  //   this._name.textContent = name; // <h1> на странице
+  //   this._about.textContent = about; // <p> на странице
+  // }
 }
