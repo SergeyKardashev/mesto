@@ -30,12 +30,6 @@ export class UserInfo {
   // возвращает объект данных профиля
   getUserInfo() {
     return this.data;
-    //
-    // считывает фио со страницы и отдает объектом
-    // return {
-    //   name: this._name.textContent,
-    //   about: this._about.textContent,
-    // };
   }
 
   // принимает новые данные пользователя и добавляет их на страницу

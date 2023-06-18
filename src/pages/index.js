@@ -103,8 +103,8 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
     // userID - переменная в глобальном скоупе.
     // Ее отдаю классу Card для сличения айдишников
     userID = responseInitialUserInfo._id;
-    console.log(responseInitialUserInfo);
-    console.log("filled userID in promise ", userID);
+    // console.log(responseInitialUserInfo);
+    // console.log("filled userID in promise ", userID);
 
     // const userData = {};
     // userData.name = responseInitialUserInfo.name;
@@ -117,11 +117,11 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
     // myUserInfo._name = "";
     // myUserInfo.data = responseInitialUserInfo;
 
-    // responseInitialCards - массив объектов карточек для отрисовки
-    console.log(responseInitialCards);
-    console.log("%c myUserInfo ", "background: darkblue", myUserInfo);
-    console.log("%c user_id ", " color: lime", myUserInfo.data._id);
+    // console.log(responseInitialCards);
+    // console.log("%c myUserInfo ", "background: darkblue", myUserInfo);
+    // console.log("%c user_id ", " color: lime", myUserInfo.data._id);
 
+    // responseInitialCards - массив объектов карточек для отрисовки
     // renderItems- колбэк. Создает+наполняет разметку аргументом.
     // Отдает ее вставить.
     cardSection.renderItems(responseInitialCards);
@@ -275,27 +275,27 @@ enableValidation(validationConfig); // вызов функции
 //     });
 // };
 
-// вешаю слушатель на аватар
-editAvatarBtn.addEventListener("click", () => {});
+// 🧢 👨‍💼 колбэк кнопки редактирования аватара - откроет попап
+function editAvatar() {
+  formValidators["avatar-form"].resetValidation();
+  popupAvatar.open();
+}
 
 // вешаю слушатель на аватар
-// document
-//   .querySelector(".profile__avatar-edit-btn")
-//   .addEventListener("click", () => {});
+editAvatarBtn.addEventListener("click", () => editAvatar());
 
-// console.log("editAvatarBtn ", editAvatarBtn);
-
+// 🧢 👨‍💼 колбэк сабмита аватара
 function handleAvatarEdit(inputValue) {
   api
     .avatarEdit(inputValue)
     .then((newAvatarLink) => {
-      console.log("сорс авы с апи: ", newAvatarLink);
+      console.log("ответ на апдейт авы с апи: ", newAvatarLink);
     })
     .catch((err) => {
       console.log(err);
     });
-
-  myUserInfo.setUserInfo(inputValue);
+  // это уйдет в then
+  // myUserInfo.setUserInfo(newAvatarLink);
 }
 
 // popup AVATAR URL

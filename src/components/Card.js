@@ -74,12 +74,12 @@ class Card {
       this._deleteButton.remove();
       this._deleteButton = null; // console.log("IDs don't match");
     }
-    console.log(
-      `%c ${this.isLiked}`,
-      "color: blue",
-      this._cardData.name,
-      this._cardData._id
-    );
+    // console.log(
+    //   `%c ${this.isLiked}`,
+    //   "color: blue",
+    //   this._cardData.name,
+    //   this._cardData._id
+    // );
     return this._card;
   }
 }
