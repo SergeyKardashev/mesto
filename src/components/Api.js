@@ -93,16 +93,15 @@ export class Api {
     return fetch(`${this.options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this.options.headers,
-      body: JSON.stringify({ avatar: avatar }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка авы ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      body: JSON.stringify(avatar),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка авы ${res.status}`);
+    });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   }
 }

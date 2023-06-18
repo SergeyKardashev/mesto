@@ -60,17 +60,22 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+function handlerLikeAndDislike(cardInstance, cardData) {
+  cardInstance._likesElement.textContent = cardData.likes.length;
+  cardInstance._likeButton.classList.toggle("gallery__like_active");
+  cardInstance.isLiked = !cardInstance.isLiked;
+}
+
+// cardInstance.updateLikes(сюда новые лайки)
 
 function handleLike(cardInstance) {
   if (cardInstance.isLiked) {
     api.removeLike(cardInstance._cardData).then((cardData) => {
-      cardInstance._likesElement.textContent = cardData.likes.length;
-      cardInstance._likeButton.classList.toggle("gallery__like_active");
+      handlerLikeAndDislike(cardInstance, cardData);
     });
   } else {
     api.addLike(cardInstance._cardData).then((cardData) => {
-      cardInstance._likesElement.textContent = cardData.likes.length;
-      cardInstance._likeButton.classList.toggle("gallery__like_active");
+      handlerLikeAndDislike(cardInstance, cardData);
     });
   }
 }
@@ -125,7 +130,11 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
     // renderItems- колбэк. Создает+наполняет разметку аргументом.
     // Отдает ее вставить.
     cardSection.renderItems(responseInitialCards);
+    // return responseInitialUserInfo;
   })
+  // .then((responseInitialUserInfo) => {
+  //   console.log(responseInitialUserInfo);
+  // })
   .catch((err) => {
     console.log(err);
   });
@@ -196,7 +205,7 @@ const handleSubmitAddPlace = (formData) => {
       return Promise.reject(`Ошибка создания карточки: ${res.status}`);
     })
     .then((cardDataFromApi) => {
-      console.log("cardDataFromApi ", cardDataFromApi);
+      // console.log("cardDataFromApi ", cardDataFromApi);
       const card1by1 = new Card(
         cardDataFromApi,
         "#card",
@@ -251,29 +260,7 @@ enableValidation(validationConfig); // вызов функции
 
 //
 //
-
 // 🔴🔴🔴🔴🔴🔴🔴🔴🔴
-
-// 🧢 описываю функцию-колбэк сабмита профиля заранее
-// const handleSubmitProfile = ({ name, about }) => {
-//   // 3. Редактирование профиля - данные идут на сервер.
-//   api
-//     .editProfile(name, about)
-//     .then((res) => {
-//       if (res.ok) {
-//         return res.json();
-//       }
-//       return Promise.reject(`Ошибка сабмита: ${res.status}`);
-//     })
-//     .then((data) => {
-//       console.log("дата патча профиля: ", data);
-//       myUserInfo.setUserInfo(data);
-//       popupProfile.close();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
 // 🧢 👨‍💼 колбэк кнопки редактирования аватара - откроет попап
 function editAvatar() {
@@ -281,23 +268,32 @@ function editAvatar() {
   popupAvatar.open();
 }
 
-// вешаю слушатель на аватар
+// слушатель на аватар
 editAvatarBtn.addEventListener("click", () => editAvatar());
 
 // 🧢 👨‍💼 колбэк сабмита аватара
 function handleAvatarEdit(inputValue) {
+  console.log("launched handler");
+  console.log(inputValue);
   api
     .avatarEdit(inputValue)
     .then((newAvatarLink) => {
       console.log("ответ на апдейт авы с апи: ", newAvatarLink);
+      myUserInfo.setUserInfo(newAvatarLink);
+      popupAvatar.close();
     })
-    .catch((err) => {
-      console.log(err);
+    .then(() => {
+      console.log(myUserInfo.data);
+      myUserInfo.setUserInfo();
     });
-  // это уйдет в then
-  // myUserInfo.setUserInfo(newAvatarLink);
+  // .catch((err) => {
+  //   console.log(err);
+  // });
 }
 
 // popup AVATAR URL
-const popupAvatar = new PopupWithForm(".popup_type_avatar", handleAvatarEdit);
+const popupAvatar = new PopupWithForm(".popup_type_avatar", (inputValue) => {
+  handleAvatarEdit(inputValue);
+});
+
 popupAvatar.setEventListeners();

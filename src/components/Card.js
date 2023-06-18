@@ -13,9 +13,10 @@ class Card {
     this._userID = userID;
     this._onLike = onLike;
     this.isLiked;
-    // this._templateSelector = templateSelector;
     this._template = document.querySelector(templateSelector).content;
   }
+
+  updateLikes() {}
 
   handleDelete() {
     if (this._card) {
@@ -23,14 +24,6 @@ class Card {
       this._card = null; // Лучше при удалении карточки очистить ссылку на DOM-элемент:
     }
   }
-  // _toggleLike() {
-  //   // наверное тут прописать метод запроса к апи?
-  //   // если 200, то менять класс, заносить новую цифру из ответа
-  //   api.addLike(cardData).then((cardData) => {
-  //     this._likesElement.textContent = cardData.likes.length;
-  //     this._likeButton.classList.toggle("gallery__like_active");
-  //   });
-  // }
 
   _setListeners() {
     this._deleteButton.addEventListener("click", () => this._onDelete(this)); // original delete // this._deleteButton.addEventListener("click", () => this._handleDelete());
@@ -74,34 +67,9 @@ class Card {
       this._deleteButton.remove();
       this._deleteButton = null; // console.log("IDs don't match");
     }
-    // console.log(
-    //   `%c ${this.isLiked}`,
-    //   "color: blue",
-    //   this._cardData.name,
-    //   this._cardData._id
-    // );
+
     return this._card;
   }
 }
 
 export default Card;
-
-// this._cardData.likes.forEach((likes) => {
-//   if (likes._id === this._userID) {
-//     this.isLiked = true;
-//     console.log(
-//       `%c ${this.isLiked}`,
-//       "color: lime",
-//       this._cardData.name,
-//       this._cardData._id
-//     );
-//   } else if (likes._id !== this._userID) {
-//     this.isLiked = false;
-//     console.log(
-//       `%c ${this.isLiked}`,
-//       "color: red",
-//       this._cardData.name,
-//       this._cardData._id
-//     );
-//   }
-// });

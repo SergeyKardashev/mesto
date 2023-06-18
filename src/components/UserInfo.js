@@ -37,10 +37,6 @@ export class UserInfo {
     this.data = userData;
     this._nameElement.textContent = this.data.name; // <h1> на странице
     this._aboutElement.textContent = this.data.about; // <p> на странице
-    this._avatarElement.src = this.data.avatar; // <img> на странице
+    this._avatarElement.style.backgroundImage = `url(${this.data.avatar})`; // <img> на странице
   }
-  // setUserInfo({ name, about }) {
-  //   this._name.textContent = name; // <h1> на странице
-  //   this._about.textContent = about; // <p> на странице
-  // }
 }
