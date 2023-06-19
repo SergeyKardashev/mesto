@@ -21,9 +21,7 @@ class Card {
   updateLikes(cardData) {
     this._likesElement.textContent = cardData.likes.length;
     // this.isLiked = !this.isLiked;
-    this.isLiked = cardData.likes.some((likes) => {
-      return likes._id === this._userID;
-    });
+    this.isLiked = cardData.likes.some((likes) => likes._id === this._userID);
     this._likeButton.classList.toggle("gallery__like_active", this.isLiked);
   }
 
