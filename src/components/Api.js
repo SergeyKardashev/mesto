@@ -35,34 +35,36 @@ export class Api {
       });
   }
 
-  addLike(cardData) {
-    return fetch(`${this.options.baseUrl}/cards/${cardData._id}/likes`, {
+  addLike(card) {
+    return fetch(`${this.options.baseUrl}/cards/${card._cardData._id}/likes`, {
       method: "PUT",
       headers: this.options.headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка простановки лайка: ${res.status}`);
-    });
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка простановки лайка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  removeLike(cardData) {
-    return fetch(`${this.options.baseUrl}/cards/${cardData._id}/likes`, {
+  removeLike(card) {
+    return fetch(`${this.options.baseUrl}/cards/${card._cardData._id}/likes`, {
       method: "DELETE",
       headers: this.options.headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка снятия лайка:  ${res.status}`);
-    });
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка снятия лайка:  ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   editProfile(newName, newAbout) {
@@ -70,15 +72,24 @@ export class Api {
       method: "PATCH",
       headers: this.options.headers,
       body: JSON.stringify({ name: newName, about: newAbout }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка сабмита: ${res.status}`);
     });
   }
 
   addCard(cardData) {
-    //
     return fetch(`${this.options.baseUrl}/cards`, {
       method: "POST",
       headers: this.options.headers,
       body: JSON.stringify({ name: cardData.name, link: cardData.link }),
+    }).then((res) => {
+      if (res) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка создания карточки: ${res.status}`);
     });
   }
 
@@ -86,6 +97,11 @@ export class Api {
     return fetch(`${this.options.baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this.options.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка удаления: ${res.status}`);
     });
   }
 
@@ -94,14 +110,15 @@ export class Api {
       method: "PATCH",
       headers: this.options.headers,
       body: JSON.stringify(avatar),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка авы ${res.status}`);
-    });
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка авы ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }

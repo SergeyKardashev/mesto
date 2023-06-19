@@ -35,8 +35,8 @@ export class UserInfo {
   // принимает новые данные пользователя и добавляет их на страницу
   setUserInfo(userData) {
     this.data = userData;
-    this._nameElement.textContent = this.data.name; // <h1> на странице
-    this._aboutElement.textContent = this.data.about; // <p> на странице
-    this._avatarElement.style.backgroundImage = `url(${this.data.avatar})`; // <img> на странице
+    this._nameElement.textContent = this.data.name;
+    this._aboutElement.textContent = this.data.about;
+    this._avatarElement.style.backgroundImage = `url(${this.data.avatar})`;
   }
 }

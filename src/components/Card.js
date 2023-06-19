@@ -12,11 +12,20 @@ class Card {
     this._cardData = cardData;
     this._userID = userID;
     this._onLike = onLike;
-    this.isLiked;
+    this._onLike = this._onLike.bind(this);
+    // this.isLiked = this._cardData.likes.some((likes)=>{return likes._id === this._userID;});
     this._template = document.querySelector(templateSelector).content;
+    this.updateLikes = this.updateLikes.bind(this);
   }
 
-  updateLikes() {}
+  updateLikes(cardData) {
+    this._likesElement.textContent = cardData.likes.length;
+    // this.isLiked = !this.isLiked;
+    this.isLiked = cardData.likes.some((likes) => {
+      return likes._id === this._userID;
+    });
+    this._likeButton.classList.toggle("gallery__like_active", this.isLiked);
+  }
 
   handleDelete() {
     if (this._card) {

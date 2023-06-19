@@ -4,7 +4,6 @@ import {
   popupUser,
   addPlaceButton,
   editProfileBtn,
-  likeNumber,
   editAvatarBtn,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
@@ -28,12 +27,6 @@ function handleDelete(card) {
   confirmPopup.open(() => {
     api
       .delete(card._cardData._id)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка удаления: ${res.status}`);
-      })
       .then(() => {
         card.handleDelete();
         confirmPopup.close();
@@ -60,22 +53,15 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-function handlerLikeAndDislike(cardInstance, cardData) {
-  cardInstance._likesElement.textContent = cardData.likes.length;
-  cardInstance._likeButton.classList.toggle("gallery__like_active");
-  cardInstance.isLiked = !cardInstance.isLiked;
-}
 
-// cardInstance.updateLikes(сюда новые лайки)
-
-function handleLike(cardInstance) {
-  if (cardInstance.isLiked) {
-    api.removeLike(cardInstance._cardData).then((cardData) => {
-      handlerLikeAndDislike(cardInstance, cardData);
+function handleLike(card) {
+  if (card.isLiked) {
+    api.removeLike(card).then((res) => {
+      card.updateLikes(res);
     });
   } else {
-    api.addLike(cardInstance._cardData).then((cardData) => {
-      handlerLikeAndDislike(cardInstance, cardData);
+    api.addLike(card).then((res) => {
+      card.updateLikes(res);
     });
   }
 }
@@ -108,33 +94,14 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
     // userID - переменная в глобальном скоупе.
     // Ее отдаю классу Card для сличения айдишников
     userID = responseInitialUserInfo._id;
-    // console.log(responseInitialUserInfo);
-    // console.log("filled userID in promise ", userID);
 
-    // const userData = {};
-    // userData.name = responseInitialUserInfo.name;
-    // userData.about = responseInitialUserInfo.about;
-    // userData.id = responseInitialUserInfo._id;
-    // userData.avatar = responseInitialUserInfo.avatar;
     myUserInfo.setUserInfo(responseInitialUserInfo);
-
-    // myUserInfo._name = "";
-    // myUserInfo._name = "";
-    // myUserInfo.data = responseInitialUserInfo;
-
-    // console.log(responseInitialCards);
-    // console.log("%c myUserInfo ", "background: darkblue", myUserInfo);
-    // console.log("%c user_id ", " color: lime", myUserInfo.data._id);
 
     // responseInitialCards - массив объектов карточек для отрисовки
     // renderItems- колбэк. Создает+наполняет разметку аргументом.
     // Отдает ее вставить.
     cardSection.renderItems(responseInitialCards);
-    // return responseInitialUserInfo;
   })
-  // .then((responseInitialUserInfo) => {
-  //   console.log(responseInitialUserInfo);
-  // })
   .catch((err) => {
     console.log(err);
   });
@@ -150,12 +117,6 @@ const handleSubmitProfile = ({ name, about }) => {
   // 3. Редактирование профиля - данные идут на сервер.
   api
     .editProfile(name, about)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка сабмита: ${res.status}`);
-    })
     .then((data) => {
       console.log("дата патча профиля: ", data);
       myUserInfo.setUserInfo(data);
@@ -198,14 +159,7 @@ const handleSubmitAddPlace = (formData) => {
   formValidators["add-place-form"].resetValidation();
   api
     .addCard({ name: formData.placeName, link: formData.placeUrl })
-    .then((res) => {
-      if (res) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка создания карточки: ${res.status}`);
-    })
     .then((cardDataFromApi) => {
-      // console.log("cardDataFromApi ", cardDataFromApi);
       const card1by1 = new Card(
         cardDataFromApi,
         "#card",
@@ -282,13 +236,9 @@ function handleAvatarEdit(inputValue) {
       myUserInfo.setUserInfo(newAvatarLink);
       popupAvatar.close();
     })
-    .then(() => {
-      console.log(myUserInfo.data);
-      myUserInfo.setUserInfo();
+    .catch((err) => {
+      console.log(err);
     });
-  // .catch((err) => {
-  //   console.log(err);
-  // });
 }
 
 // popup AVATAR URL
