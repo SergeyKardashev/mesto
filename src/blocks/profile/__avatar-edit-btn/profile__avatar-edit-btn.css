@@ -8,6 +8,7 @@
   border: none;
   background: url(../../../images/avatar.png);
   background-position: center;
+  background-size: cover;
   cursor: pointer;
   position: relative;
   display: flex;

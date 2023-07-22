@@ -18,6 +18,8 @@ export class PopupWithForm extends Popup {
     this._inputList = Array.from(this._form.querySelectorAll(".popup__input"));
     this._handleSubmit = this._handleSubmit.bind(this);
     this.setEventListeners = this.setEventListeners.bind(this);
+    this.submitButton = this._form.querySelector(".popup__submit-button");
+    this.setSubmitButtonLabel = this.setSubmitButtonLabel.bind(this);
   }
 
   // собирает данные всех полей формы.
@@ -38,6 +40,10 @@ export class PopupWithForm extends Popup {
     Вполне вероятно, что при сабмите не нужно будет сразу закрывать попап(например, при ожидании ответа сервера).
     Лучше вызывать close при необходимости в колбэке
     */
+  }
+
+  setSubmitButtonLabel(label) {
+    this.submitButton.textContent = label;
   }
 
   setEventListeners() {

@@ -1,5 +1,4 @@
 import {
-  // initialCards,
   validationConfig,
   popupUser,
   addPlaceButton,
@@ -89,6 +88,7 @@ const cardSection = new Section(renderCard, ".gallery");
 const promiseInitialUserInfo = api.setInitialUserInfo();
 const promiseInitialCards = api.getInitialCards();
 
+// жду пока оба запроса вернутся чтобы сличать мой айди и понимать ставить ли корзину на карточку
 Promise.all([promiseInitialUserInfo, promiseInitialCards])
   .then(([responseInitialUserInfo, responseInitialCards]) => {
     // userID - переменная в глобальном скоупе.
@@ -114,16 +114,21 @@ export const myUserInfo = new UserInfo({
 
 // 🧢 описываю функцию-колбэк сабмита профиля заранее
 const handleSubmitProfile = ({ name, about }) => {
-  // 3. Редактирование профиля - данные идут на сервер.
-  api
+  // меняю текст кнопки на ожидающий
+  popupProfile.setSubmitButtonLabel("Сохранение...");
+  // Редактирование профиля - данные идут на сервер.
+  return api
     .editProfile(name, about)
     .then((data) => {
-      console.log("дата патча профиля: ", data);
       myUserInfo.setUserInfo(data);
       popupProfile.close();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      // меняю текст кнопки на дефолтный
+      popupProfile.setSubmitButtonLabel("Сохранить");
     });
 };
 
