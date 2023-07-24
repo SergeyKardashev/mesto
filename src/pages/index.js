@@ -12,7 +12,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
-import { PopupWithConfirm } from "../components/PopupWithConfirm.js";
+import { PopupWithConfirm } from "../components/PopupWithConfirmation.js";
 
 import "./index.css"; // импорт главного файла стилей. Такая запись только для вебпака
 

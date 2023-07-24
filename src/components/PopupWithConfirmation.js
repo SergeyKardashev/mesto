@@ -1,4 +1,4 @@
-import { PopupWithForm } from "./PopupWithForm";
+import { PopupWithForm } from "./PopupWithForm.js";
 
 export class PopupWithConfirm extends PopupWithForm {
   // без конструктора. унаследованный сабмит будет перезаписан
