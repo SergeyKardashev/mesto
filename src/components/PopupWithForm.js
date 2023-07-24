@@ -37,7 +37,7 @@ export class PopupWithForm extends Popup {
 
     try {
       this.submitButton.textContent = "Сохранение...";
-      debugger;
+      // debugger;
       await this._onSubmit(this._getInputValues());
       this.close();
     } finally {

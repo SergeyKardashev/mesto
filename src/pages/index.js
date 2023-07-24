@@ -157,30 +157,43 @@ editProfileBtn.addEventListener("click", () => editProfile());
 // 🧢 колбэк слушателя сабмита карточки
 const handleSubmitAddPlace = (formData) => {
   formValidators["add-place-form"].resetValidation();
-  return api
-    .addCard({ name: formData.placeName, link: formData.placeUrl })
-    .then((cardDataFromApi) => {
-      const card1by1 = new Card(
-        cardDataFromApi,
-        "#card",
-        handleCardClick,
-        handleDelete,
-        handleLike,
-        myUserInfo.data._id
-      );
-      cardSection.addItem(card1by1.getCard());
-    })
-    .then(() => {
-      addPlacePopup.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  const delay = async (ms) => {
+    await new Promise((res) => setTimeout(res, ms));
+  };
+
+  return delay(2000).then(() => {
+    return api
+      .addCard({ name: formData.placeName, link: formData.placeUrl })
+      .then((cardDataFromApi) => {
+        const card1by1 = new Card(
+          cardDataFromApi,
+          "#card",
+          handleCardClick,
+          handleDelete,
+          handleLike,
+          myUserInfo.data._id
+        );
+        cardSection.addItem(card1by1.getCard());
+      })
+      .then(() => {
+        addPlacePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 };
 
-const addPlacePopup = new PopupWithForm(".popup_type_new-place", (formData) => {
-  handleSubmitAddPlace(formData);
-});
+const addPlacePopup = new PopupWithForm(
+  ".popup_type_new-place",
+  handleSubmitAddPlace
+);
+
+// комменты от Артёма "ты передаешь не асинхронную функцию" и т.д.
+// const addPlacePopup = new PopupWithForm(".popup_type_new-place", (formData) => {
+//   handleSubmitAddPlace(formData);
+// });
 
 addPlacePopup.setEventListeners();
 
