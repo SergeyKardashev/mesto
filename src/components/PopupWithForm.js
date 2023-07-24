@@ -31,15 +31,18 @@ export class PopupWithForm extends Popup {
     return this._formInputValues;
   }
 
-  _handleSubmit(evt) {
+  async _handleSubmit(evt) {
     evt.preventDefault();
-    this._onSubmit(this._getInputValues());
-    // this._close();
-    /*
-    Не стоит прямо в обработчике вызывать метод close, это делает логику сабмита менее гибкой.
-    Вполне вероятно, что при сабмите не нужно будет сразу закрывать попап(например, при ожидании ответа сервера).
-    Лучше вызывать close при необходимости в колбэке
-    */
+    const originalText = this.submitButton.textContent;
+
+    try {
+      this.submitButton.textContent = "Сохранение...";
+      debugger;
+      await this._onSubmit(this._getInputValues());
+      this.close();
+    } finally {
+      this.submitButton.textContent = originalText;
+    }
   }
 
   setSubmitButtonLabel(label) {

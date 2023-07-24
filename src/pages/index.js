@@ -114,8 +114,6 @@ export const myUserInfo = new UserInfo({
 
 // 🧢 описываю функцию-колбэк сабмита профиля заранее
 const handleSubmitProfile = ({ name, about }) => {
-  // меняю текст кнопки на ожидающий
-  popupProfile.setSubmitButtonLabel("Сохранение...");
   // Редактирование профиля - данные идут на сервер.
   return api
     .editProfile(name, about)
@@ -125,10 +123,6 @@ const handleSubmitProfile = ({ name, about }) => {
     })
     .catch((err) => {
       console.log(err);
-    })
-    .finally(() => {
-      // меняю текст кнопки на дефолтный
-      popupProfile.setSubmitButtonLabel("Сохранить");
     });
 };
 
@@ -139,6 +133,7 @@ const popupProfile = new PopupWithForm(
     handleSubmitProfile(inputVaues);
   }
 );
+
 // вешаю слушатели попапу профиля
 popupProfile.setEventListeners();
 
@@ -162,7 +157,7 @@ editProfileBtn.addEventListener("click", () => editProfile());
 // 🧢 колбэк слушателя сабмита карточки
 const handleSubmitAddPlace = (formData) => {
   formValidators["add-place-form"].resetValidation();
-  api
+  return api
     .addCard({ name: formData.placeName, link: formData.placeUrl })
     .then((cardDataFromApi) => {
       const card1by1 = new Card(
@@ -174,6 +169,8 @@ const handleSubmitAddPlace = (formData) => {
         myUserInfo.data._id
       );
       cardSection.addItem(card1by1.getCard());
+    })
+    .then(() => {
       addPlacePopup.close();
     })
     .catch((err) => {
@@ -234,7 +231,7 @@ editAvatarBtn.addEventListener("click", () => editAvatar());
 function handleAvatarEdit(inputValue) {
   console.log("launched handler");
   console.log(inputValue);
-  api
+  return api
     .avatarEdit(inputValue)
     .then((newAvatarLink) => {
       console.log("ответ на апдейт авы с апи: ", newAvatarLink);
