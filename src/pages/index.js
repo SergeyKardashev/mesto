@@ -262,3 +262,5 @@ const popupAvatar = new PopupWithForm(".popup_type_avatar", (inputValue) => {
 });
 
 popupAvatar.setEventListeners();
+
+// 25th 20:03
