@@ -20,11 +20,11 @@
 // input Жак-Ив id = user-name
 // input Жак-Ив = name
 export class UserInfo {
-  constructor({ nameSelector, aboutSelector }) {
+  constructor({ nameSelector, aboutSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector); // page element, NOT ITPUT
     this._aboutElement = document.querySelector(aboutSelector); // page element, NOT ITPUT
     this.data = {};
-    this._avatarElement = document.querySelector(".profile__avatar-edit-btn");
+    this._avatarElement = document.querySelector(avatarSelector);
   }
 
   // возвращает объект данных профиля

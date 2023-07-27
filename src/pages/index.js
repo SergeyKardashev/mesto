@@ -124,6 +124,7 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
 export const myUserInfo = new UserInfo({
   nameSelector: ".profile__name",
   aboutSelector: ".profile__about",
+  avatarSelector: ".profile__avatar-edit-btn",
 });
 
 // 🧢 описываю функцию-колбэк сабмита профиля заранее
