@@ -36,7 +36,7 @@ export class Api {
   }
 
   addLike(card) {
-    return fetch(`${this.options.baseUrl}/cards/${card._cardData._id}/likes`, {
+    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
       method: "PUT",
       headers: this.options.headers,
     })
@@ -52,7 +52,7 @@ export class Api {
   }
 
   removeLike(card) {
-    return fetch(`${this.options.baseUrl}/cards/${card._cardData._id}/likes`, {
+    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
       method: "DELETE",
       headers: this.options.headers,
     })

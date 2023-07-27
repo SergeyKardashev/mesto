@@ -25,7 +25,7 @@ const handleCardClick = (cardData) => zoomPopup.open(cardData);
 function handleDelete(card) {
   confirmPopup.open(() => {
     api
-      .delete(card._cardData._id)
+      .delete(card.cardData._id)
       .then(() => {
         card.handleDelete();
         confirmPopup.close();

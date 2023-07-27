@@ -9,11 +9,11 @@ class Card {
   ) {
     this._onImageClick = onImageClick;
     this._onDelete = onDelete;
-    this._cardData = cardData;
+    this.cardData = cardData;
     this._userID = userID;
     this._onLike = onLike;
     this._onLike = this._onLike.bind(this);
-    // this.isLiked = this._cardData.likes.some((likes)=>{return likes._id === this._userID;});
+    // this.isLiked = this.cardData.likes.some((likes)=>{return likes._id === this._userID;});
     this._template = document.querySelector(templateSelector).content;
     this.updateLikes = this.updateLikes.bind(this);
   }
@@ -36,7 +36,7 @@ class Card {
     this._deleteButton.addEventListener("click", () => this._onDelete(this)); // original delete // this._deleteButton.addEventListener("click", () => this._handleDelete());
     this._likeButton.addEventListener("click", () => this._onLike(this));
     this._cardImage.addEventListener("click", () =>
-      this._onImageClick(this._cardData)
+      this._onImageClick(this.cardData)
     );
   }
 
@@ -50,10 +50,10 @@ class Card {
     this._likeButton = this._card.querySelector(".gallery__like");
     this._likesElement = this._card.querySelector(".gallery__like-number");
 
-    this._cardImage.src = this._cardData.link;
-    this._cardImage.alt = this._cardData.name;
-    this._cardText.textContent = this._cardData.name;
-    this._likesElement.textContent = this._cardData.likes.length;
+    this._cardImage.src = this.cardData.link;
+    this._cardImage.alt = this.cardData.name;
+    this._cardText.textContent = this.cardData.name;
+    this._likesElement.textContent = this.cardData.likes.length;
     this._setListeners();
   }
 
@@ -62,7 +62,7 @@ class Card {
       this._createCard();
     }
     // определю залайкана ли карточка МНОЮ
-    this.isLiked = this._cardData.likes.some((likes) => {
+    this.isLiked = this.cardData.likes.some((likes) => {
       return likes._id === this._userID;
     });
     // если я лайкнул ранее, то крашу сердечно
@@ -70,7 +70,7 @@ class Card {
       this._likeButton.classList.add("gallery__like_active");
     }
 
-    if (this._userID !== this._cardData.owner._id) {
+    if (this._userID !== this.cardData.owner._id) {
       this._deleteButton.remove();
       this._deleteButton = null; // console.log("IDs don't match");
     }
