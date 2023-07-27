@@ -55,13 +55,23 @@ const api = new Api({
 
 function handleLike(card) {
   if (card.isLiked) {
-    api.removeLike(card).then((res) => {
-      card.updateLikes(res);
-    });
+    api
+      .removeLike(card)
+      .then((res) => {
+        card.updateLikes(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } else {
-    api.addLike(card).then((res) => {
-      card.updateLikes(res);
-    });
+    api
+      .addLike(card)
+      .then((res) => {
+        card.updateLikes(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
