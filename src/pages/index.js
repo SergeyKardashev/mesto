@@ -262,3 +262,5 @@ const popupAvatar = new PopupWithForm(".popup_type_avatar", (inputValue) => {
 });
 
 popupAvatar.setEventListeners();
+
+// test git 2023-07-27 at 14:27
