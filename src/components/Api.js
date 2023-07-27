@@ -12,79 +12,67 @@ export class Api {
   }
 
   setInitialUserInfo() {
-    return (
-      fetch(`${this.options.baseUrl}/users/me`, {
-        method: "GET",
-        headers: this.options.headers,
-      })
-        .then(this._checkResponse)
-        // .then((res) => {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        //   return Promise.reject(`Ошибка пол-я карт: ${res.status}`);
-        // })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this.options.baseUrl}/users/me`, {
+      method: "GET",
+      headers: this.options.headers,
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка пол-я карт: ${res.status}`);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 
   getInitialCards() {
-    return (
-      fetch(`${this.options.baseUrl}/cards`, {
-        method: "GET",
-        headers: this.options.headers,
-      })
-        .then(this._checkResponse)
-        // .then((res) => {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        //   return Promise.reject(`Ошибка получ профиля: ${res.status}`);
-        // })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this.options.baseUrl}/cards`, {
+      method: "GET",
+      headers: this.options.headers,
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка получ профиля: ${res.status}`);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 
   addLike(card) {
-    return (
-      fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-        method: "PUT",
-        headers: this.options.headers,
-      })
-        .then(this._checkResponse)
-        // .then((res) => {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        //   return Promise.reject(`Ошибка простановки лайка: ${res.status}`);
-        // })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
+      method: "PUT",
+      headers: this.options.headers,
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка простановки лайка: ${res.status}`);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 
   removeLike(card) {
-    return (
-      fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
-        method: "DELETE",
-        headers: this.options.headers,
-      })
-        .then(this._checkResponse)
-        // .then((res) => {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        //   return Promise.reject(`Ошибка снятия лайка:  ${res.status}`);
-        // })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this.options.baseUrl}/cards/${card.cardData._id}/likes`, {
+      method: "DELETE",
+      headers: this.options.headers,
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка снятия лайка:  ${res.status}`);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 
   editProfile(newName, newAbout) {
@@ -129,22 +117,19 @@ export class Api {
   }
 
   avatarEdit(avatar) {
-    return (
-      fetch(`${this.options.baseUrl}/users/me/avatar`, {
-        method: "PATCH",
-        headers: this.options.headers,
-        body: JSON.stringify(avatar),
-      })
-        .then(this._checkResponse)
-        // .then((res) => {
-        //   if (res.ok) {
-        //     return res.json();
-        //   }
-        //   return Promise.reject(`Ошибка авы ${res.status}`);
-        // })
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+    return fetch(`${this.options.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this.options.headers,
+      body: JSON.stringify(avatar),
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   if (res.ok) {
+    //     return res.json();
+    //   }
+    //   return Promise.reject(`Ошибка авы ${res.status}`);
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
   }
 }
