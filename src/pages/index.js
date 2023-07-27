@@ -67,18 +67,22 @@ function handleLike(card) {
 
 let userID = "";
 
-// 🧢 Функция-колбэк добавления карточи. Декларация. НЕ вызов. Используется форычом.
-const renderCard = (data) => {
-  // в var тащу результат работы функции = разметку, а НЕ объект
-  const cardToAdd = new Card(
+function createCard(data) {
+  const cardElement = new Card(
     data,
     "#card",
     handleCardClick,
     handleDelete,
     handleLike,
     myUserInfo.data._id
-  ).getCard();
+  );
 
+  return cardElement.getCard();
+}
+// 🧢 Функция-колбэк добавления карточи. Декларация. НЕ вызов. Используется форычом.
+const renderCard = (data) => {
+  // в var тащу результат работы функции = разметку, а НЕ объект
+  const cardToAdd = createCard(data);
   cardSection.addItem(cardToAdd);
 };
 
@@ -156,33 +160,19 @@ editProfileBtn.addEventListener("click", () => editProfile());
 
 // 🧢 колбэк слушателя сабмита карточки
 const handleSubmitAddPlace = (formData) => {
-  formValidators["add-place-form"].resetValidation();
-
-  const delay = async (ms) => {
-    await new Promise((res) => setTimeout(res, ms));
-  };
-
-  return delay(2000).then(() => {
-    return api
-      .addCard({ name: formData.placeName, link: formData.placeUrl })
-      .then((cardDataFromApi) => {
-        const card1by1 = new Card(
-          cardDataFromApi,
-          "#card",
-          handleCardClick,
-          handleDelete,
-          handleLike,
-          myUserInfo.data._id
-        );
-        cardSection.addItem(card1by1.getCard());
-      })
-      .then(() => {
-        addPlacePopup.close();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  // formValidators["add-place-form"].resetValidation(); При сабмите формы не нужно вызывать resetValidation, так как это не имеет смысла. Нужно делать это только при открытии теперь. И оно уже там есть
+  api
+    .addCard({ name: formData.placeName, link: formData.placeUrl })
+    .then((cardDataFromApi) => {
+      const card1by1 = createCard(cardDataFromApi);
+      cardSection.addItem(card1by1);
+    })
+    .then(() => {
+      addPlacePopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const addPlacePopup = new PopupWithForm(
