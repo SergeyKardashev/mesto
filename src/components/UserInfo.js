@@ -23,8 +23,8 @@ export class UserInfo {
   constructor({ nameSelector, aboutSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector); // page element, NOT ITPUT
     this._aboutElement = document.querySelector(aboutSelector); // page element, NOT ITPUT
-    this.data = {};
     this._avatarElement = document.querySelector(avatarSelector);
+    this.data = {};
   }
 
   // возвращает объект данных профиля
@@ -33,10 +33,20 @@ export class UserInfo {
   }
 
   // принимает новые данные пользователя и добавляет их на страницу
-  setUserInfo(userData) {
-    this.data = userData;
-    this._nameElement.textContent = this.data.name;
-    this._aboutElement.textContent = this.data.about;
-    this._avatarElement.style.backgroundImage = `url(${this.data.avatar})`;
+  setUserInfo({ name, about, avatar, _id }) {
+    this._nameElement.textContent = name;
+    this._aboutElement.textContent = about;
+    this._avatarElement.style.backgroundImage = `url(${avatar})`;
+    // this._id = _id;
+    this.data = { name, about, avatar, _id };
   }
+
+  // заменил этот кусок свежим с деструктуризацией объекта
+  // setUserInfo(userData) {
+  //   this.data = userData;
+  //   this._nameElement.textContent = this.data.name;
+  //   this._aboutElement.textContent = this.data.about;
+  //   this._avatarElement.style.backgroundImage = `url(${this.data.avatar})`;
+  //   debugger;
+  // }
 }

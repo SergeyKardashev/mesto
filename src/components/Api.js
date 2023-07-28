@@ -16,15 +16,6 @@ export class Api {
       method: "GET",
       headers: this.options.headers,
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка пол-я карт: ${res.status}`);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   }
 
   getInitialCards() {
@@ -32,15 +23,6 @@ export class Api {
       method: "GET",
       headers: this.options.headers,
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка получ профиля: ${res.status}`);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   }
 
   addLike(card) {
@@ -48,15 +30,6 @@ export class Api {
       method: "PUT",
       headers: this.options.headers,
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка простановки лайка: ${res.status}`);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   }
 
   removeLike(card) {
@@ -64,15 +37,6 @@ export class Api {
       method: "DELETE",
       headers: this.options.headers,
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка снятия лайка:  ${res.status}`);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   }
 
   editProfile(newName, newAbout) {
@@ -81,12 +45,6 @@ export class Api {
       headers: this.options.headers,
       body: JSON.stringify({ name: newName, about: newAbout }),
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка сабмита: ${res.status}`);
-    // });
   }
 
   addCard(cardData) {
@@ -95,12 +53,6 @@ export class Api {
       headers: this.options.headers,
       body: JSON.stringify({ name: cardData.name, link: cardData.link }),
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка создания карточки: ${res.status}`);
-    // });
   }
 
   delete(cardId) {
@@ -108,12 +60,6 @@ export class Api {
       method: "DELETE",
       headers: this.options.headers,
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка удаления: ${res.status}`);
-    // });
   }
 
   avatarEdit(avatar) {
@@ -122,14 +68,5 @@ export class Api {
       headers: this.options.headers,
       body: JSON.stringify(avatar),
     }).then(this._checkResponse);
-    // .then((res) => {
-    //   if (res.ok) {
-    //     return res.json();
-    //   }
-    //   return Promise.reject(`Ошибка авы ${res.status}`);
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
   }
 }

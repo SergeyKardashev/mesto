@@ -108,7 +108,7 @@ Promise.all([promiseInitialUserInfo, promiseInitialCards])
     // userID - переменная в глобальном скоупе.
     // Ее отдаю классу Card для сличения айдишников
     userID = responseInitialUserInfo._id;
-
+    console.log(responseInitialUserInfo);
     myUserInfo.setUserInfo(responseInitialUserInfo);
 
     // responseInitialCards - массив объектов карточек для отрисовки
@@ -151,18 +151,18 @@ const popupProfile = new PopupWithForm(
 
 // вешаю слушатели попапу профиля
 popupProfile.setEventListeners();
-
+//
 // 🧢 👨‍💼 колбэк кнопки редактирования профиля - откроет попап
 const editProfile = () => {
   formValidators["profile-form"].resetValidation();
-  // Наполняю поля формы данными со страницы через метод класса UserInf
+  // 🔴 упрощаю - заменяю наполнение инпутов значениями на метод setInputValues.
+  // Наполняю поля формы данными со страницы через метод класса UserInfo
+  // // деструктуризация. Переменные не покинут пределы слушателя
+  // const { name, about } = myUserInfo.getUserInfo();
+  // popupUser.nameInput.value = name;
+  // popupUser.aboutInput.value = about;
 
-  // деструктуризация. Переменные не покинут пределы слушателя
-  const { name, about } = myUserInfo.getUserInfo();
-
-  popupUser.nameInput.value = name;
-  popupUser.aboutInput.value = about;
-
+  popupProfile.setInputValues(myUserInfo.getUserInfo());
   popupProfile.open();
 };
 
