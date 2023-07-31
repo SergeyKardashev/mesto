@@ -276,10 +276,6 @@ const enableValidation = (validationConfig) => {
 
 enableValidation(validationConfig); // вызов функции
 
-//
-//
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴
-
 // 🧢 👨‍💼 колбэк кнопки редактирования аватара - откроет попап
 function editAvatar() {
   formValidators["avatar-form"].resetValidation();
@@ -291,19 +287,33 @@ editAvatarBtn.addEventListener("click", () => editAvatar());
 
 // 🧢 👨‍💼 колбэк сабмита аватара
 function handleAvatarEdit(inputValue) {
-  console.log("launched handler");
-  console.log(inputValue);
-  return api
-    .avatarEdit(inputValue)
-    .then((newAvatarLink) => {
-      console.log("ответ на апдейт авы с апи: ", newAvatarLink);
+  // создаю функцию, она возвращает промис, т.к. любой запрос возвращает его
+  function makeRequest() {
+    // `return` позволяет продолжать цепочку `then, catch, finally`
+    return api.avatarEdit(inputValue).then((newAvatarLink) => {
       myUserInfo.setUserInfo(newAvatarLink);
-      popupAvatar.close();
-    })
-    .catch((err) => {
-      console.log(err);
     });
+  }
+  // вызываю универ. функцию, передавая ей запрос, экземпляр попапа и лейбл кнопки (если нужен не `"Сохранение..."`)
+  handleSubmit(makeRequest, popupAvatar);
 }
+
+// старая функция, заменил на ревьюверскую
+// // 🧢 👨‍💼 колбэк сабмита аватара
+// function handleAvatarEdit(inputValue) {
+//   console.log("launched avatar handler. It's values: ");
+//   console.log(inputValue);
+//   return api
+//     .avatarEdit(inputValue)
+//     .then((newAvatarLink) => {
+//       console.log("ответ на апдейт авы с апи: ", newAvatarLink);
+//       myUserInfo.setUserInfo(newAvatarLink);
+//       popupAvatar.close();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
 
 // popup AVATAR URL
 const popupAvatar = new PopupWithForm(".popup_type_avatar", (inputValue) => {
