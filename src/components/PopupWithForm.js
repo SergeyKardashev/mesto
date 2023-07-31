@@ -20,6 +20,7 @@ export class PopupWithForm extends Popup {
     this.setEventListeners = this.setEventListeners.bind(this);
     this.submitButton = this._form.querySelector(".popup__submit-button");
     this.setSubmitButtonLabel = this.setSubmitButtonLabel.bind(this);
+    this._submitButtonText = this.submitButton.textContent;
   }
 
   // собирает данные всех полей формы.
@@ -31,19 +32,42 @@ export class PopupWithForm extends Popup {
     return this._formInputValues;
   }
 
-  async _handleSubmit(evt) {
-    evt.preventDefault();
-    const originalText = this.submitButton.textContent;
+  // isLoading - не переменная, а параметр,
+  // используемый только тут
 
-    try {
-      this.submitButton.textContent = "Сохранение...";
-      // debugger;
-      await this._onSubmit(this._getInputValues());
-      this.close();
-    } finally {
-      this.submitButton.textContent = originalText;
+  renderLoading(isLoading, loadingText = "Сохранение...") {
+    if (isLoading) {
+      this.submitButton.textContent = loadingText;
+    } else {
+      this.submitButton.textContent = this._submitButtonText;
     }
   }
+
+  // Метод сабмита избавил от инструкций по смене лейбака
+  // И от асинхронности.
+  // Ведь теперь не нужно дожидаться ответа от сервака.
+  _handleSubmit(evt) {
+    evt.preventDefault();
+    this._onSubmit(this._getInputValues());
+  }
+  //
+  //
+  // Метод Артёма с заменой лейбака. Метод заменил на простой.
+  // Т.к. ревьювер предложил свой универсальный
+  //
+  // async _handleSubmit(evt) {
+  //   evt.preventDefault();
+  //   const originalText = this.submitButton.textContent;
+
+  //   try {
+  //     this.submitButton.textContent = "Сохранение...";
+  //     debugger;
+  //     await this._onSubmit(this._getInputValues());
+  //     this.close();
+  //   } finally {
+  //     this.submitButton.textContent = originalText;
+  //   }
+  // }
 
   setSubmitButtonLabel(label) {
     this.submitButton.textContent = label;

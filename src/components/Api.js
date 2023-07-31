@@ -39,13 +39,20 @@ export class Api {
     }).then(this._checkResponse);
   }
 
-  editProfile(newName, newAbout) {
+  editProfile(inputValues) {
     return fetch(`${this.options.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this.options.headers,
-      body: JSON.stringify({ name: newName, about: newAbout }),
+      body: JSON.stringify(inputValues),
     }).then(this._checkResponse);
   }
+  // editProfile(newName, newAbout) {
+  //   return fetch(`${this.options.baseUrl}/users/me`, {
+  //     method: "PATCH",
+  //     headers: this.options.headers,
+  //     body: JSON.stringify({ name: newName, about: newAbout }),
+  //   }).then(this._checkResponse);
+  // }
 
   addCard(cardData) {
     return fetch(`${this.options.baseUrl}/cards`, {
