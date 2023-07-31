@@ -19,7 +19,9 @@ export class PopupWithForm extends Popup {
     this._handleSubmit = this._handleSubmit.bind(this);
     this.setEventListeners = this.setEventListeners.bind(this);
     this.submitButton = this._form.querySelector(".popup__submit-button");
-    this.setSubmitButtonLabel = this.setSubmitButtonLabel.bind(this);
+    //
+    // метод setSubmitButtonLabel лишний
+    // this.setSubmitButtonLabel = this.setSubmitButtonLabel.bind(this);
     this._submitButtonText = this.submitButton.textContent;
   }
 
@@ -44,8 +46,7 @@ export class PopupWithForm extends Popup {
   }
 
   // Метод сабмита избавил от инструкций по смене лейбака
-  // И от асинхронности.
-  // Ведь теперь не нужно дожидаться ответа от сервака.
+  // И от асинхронности т.к. уже не нужно ждать ответа сервака.
   _handleSubmit(evt) {
     evt.preventDefault();
     this._onSubmit(this._getInputValues());
@@ -69,9 +70,11 @@ export class PopupWithForm extends Popup {
   //   }
   // }
 
-  setSubmitButtonLabel(label) {
-    this.submitButton.textContent = label;
-  }
+  //
+  // лишний метод, т.к. использовал ревьюверский
+  // setSubmitButtonLabel(label) {
+  //   this.submitButton.textContent = label;
+  // }
 
   setEventListeners() {
     super.setEventListeners();
