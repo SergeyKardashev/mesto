@@ -170,7 +170,7 @@ export const myUserInfo = new UserInfo({
 const handleSubmitProfile = (inputValues) => {
   // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
   function makeRequest() {
-    // `return` позволяет потом дальше продолжать цепочку `then, catch, finally`
+    // `return` позволяет продолжать цепочку `then, catch, finally`
     return api.editProfile(inputValues).then((userData) => {
       myUserInfo.setUserInfo(userData);
     });
@@ -193,13 +193,6 @@ popupProfile.setEventListeners();
 // 🧢 👨‍💼 колбэк кнопки редактирования профиля - откроет попап
 const editProfile = () => {
   formValidators["profile-form"].resetValidation();
-  // 🔴 упрощаю - заменяю наполнение инпутов значениями на метод setInputValues.
-  // Наполняю поля формы данными со страницы через метод класса UserInfo
-  // // деструктуризация. Переменные не покинут пределы слушателя
-  // const { name, about } = myUserInfo.getUserInfo();
-  // popupUser.nameInput.value = name;
-  // popupUser.aboutInput.value = about;
-
   popupProfile.setInputValues(myUserInfo.getUserInfo());
   popupProfile.open();
 };
@@ -210,19 +203,36 @@ editProfileBtn.addEventListener("click", () => editProfile());
 // 🧢 колбэк слушателя сабмита карточки
 const handleSubmitAddPlace = (formData) => {
   // formValidators["add-place-form"].resetValidation(); При сабмите формы не нужно вызывать resetValidation, так как это не имеет смысла. Нужно делать это только при открытии теперь. И оно уже там есть
-  api
-    .addCard({ name: formData.placeName, link: formData.placeUrl })
-    .then((cardDataFromApi) => {
-      const card1by1 = createCard(cardDataFromApi);
-      cardSection.addItem(card1by1);
-    })
-    .then(() => {
-      addPlacePopup.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
+  function makeRequest() {
+    return api
+      .addCard({ name: formData.placeName, link: formData.placeUrl })
+      .then((cardDataFromApi) => {
+        const card1by1 = createCard(cardDataFromApi);
+        cardSection.addItem(card1by1);
+      });
+  }
+  // вызываем универсальную функцию, передавая в нее запрос, экземпляр попапа и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
+  handleSubmit(makeRequest, addPlacePopup);
 };
+
+// срарая версия. Заменил на предложенную ревьювером.
+// const handleSubmitAddPlace = (formData) => {
+//   // formValidators["add-place-form"].resetValidation(); При сабмите формы не нужно вызывать resetValidation, так как это не имеет смысла. Нужно делать это только при открытии теперь. И оно уже там есть
+//   api
+//     .addCard({ name: formData.placeName, link: formData.placeUrl })
+//     .then((cardDataFromApi) => {
+//       const card1by1 = createCard(cardDataFromApi);
+//       cardSection.addItem(card1by1);
+//     })
+//     .then(() => {
+//       addPlacePopup.close();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 
 const addPlacePopup = new PopupWithForm(
   ".popup_type_new-place",
